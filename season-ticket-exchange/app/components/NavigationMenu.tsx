@@ -14,7 +14,7 @@ function SideNav() {
 
   return (
     <>
-      <div className="flex justify-center items-center space-x-2">
+      <div className="flex justify-center items-center text-center space-x-2">
         <h1 className="text-white text-xl underline">
           <Link to="/">New York Rangers Season Ticket Exchange</Link>
         </h1>
@@ -56,7 +56,7 @@ function SideNav() {
                   Tickets
                 </NavLink>
               </li>
-              <li className="flex-auto">
+              <li className="flex-auto text-center">
                 <NavLink
                   to="/mytickets"
                   className="text-xl font-bold hover:underline hover:text-red [&.active]:text-red underline decoration-red text-white"
@@ -84,7 +84,12 @@ function SideNav() {
                 </NavLink>
               </li> */}
               <li className="flex-auto text-white">
-                <Form method="post" id="logout-form" action="/logout">
+                <Form
+                  method="post"
+                  id="logout-form"
+                  action="/logout"
+                  className="pr-5"
+                >
                   <button>Logout</button>
                 </Form>
                 {/* <Form method="post" id="logout-form" action="/logout">

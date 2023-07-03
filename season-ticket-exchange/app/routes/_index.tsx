@@ -12,17 +12,17 @@ export default function Index() {
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
       <SideNav />
       {/* <MainHeader /> */}
-      <h1 className="text-xl font-bold text-white flex justify-center py-10">
+      <h1 className="text-xl font-bold text-white flex justify-center text-center py-10">
         Welcome to the New York Rangers Season Ticket Exchange
       </h1>
       <div className="grid justify-center">
-        <p className="text-white text-center">
+        <p className="text-white text-center px-5">
           Season Ticket Exchance is for the real fans of the game. It's for the
           season ticket holders looking to put their seats in the hands of fans
           who are looking for tickets at face value without all the absurd fees
           like on other sites.
         </p>
-        <p className="text-white text-center">
+        <p className="text-white text-center px-5">
           If you have any feature requests please email{" "}
           <a
             className="underline"
@@ -31,7 +31,7 @@ export default function Index() {
             djreale@gmail.com
           </a>
         </p>
-        <p className="text-white text-center py-5 flex justify-center text-white space-x-2 pt-5">
+        <p className="text-white text-center py-5 flex justify-center text-white space-x-2 pt-5 px-5">
           Start selling{" "}
           <Link to="/mytickets" className="underline px-2">
             <FaTicketAlt className="text-gray text-3xl" />
