@@ -1,6 +1,7 @@
 export interface GAME {
+  game: number;
   opponent: string;
-  date: Date;
+  date: string;
   time: string;
 }
 
@@ -8,216 +9,257 @@ export interface GAME {
 export const schedule: Array<GAME> = [
   // October
   {
+    game: 1,
     opponent: "Arizona Coyotes",
-    date: new Date("10/16/2023"),
+    date: "10/16/2023",
     time: "7:00 PM ET",
   },
   {
+    game: 2,
     opponent: "Nashville Predators",
-    date: new Date("10/19/2023"),
+    date: "10/19/2023",
     time: "7:00 PM ET",
   },
   // November
   {
+    game: 3,
     opponent: "Carolina Hurricanes",
-    date: new Date("11/02/2023"),
+    date: "11/02/2023",
     time: "7:00 PM ET",
   },
   {
+    game: 4,
     opponent: "Detroit Red Wings",
-    date: new Date("11/07/2023"),
+    date: "11/07/2023",
     time: "7:30 PM ET",
   },
   {
+    game: 5,
     opponent: "Minnesota Wild",
-    date: new Date("11/09/2023"),
+    date: "11/09/2023",
     time: "7:00 PM ET",
   },
   {
+    game: 6,
     opponent: "Columbus Blue Jackets",
-    date: new Date("11/12/2023"),
+    date: "11/12/2023",
     time: "7:00 PM ET",
   },
   {
+    game: 7,
     opponent: "Boston Bruins",
-    date: new Date("11/25/2023"),
+    date: "11/25/2023",
     time: "1:00 PM ET",
   },
   {
+    game: 8,
     opponent: "Buffalo Sabres",
-    date: new Date("11/27/2023"),
+    date: "11/27/2023",
     time: "7:00 PM ET",
   },
   {
+    game: 9,
     opponent: "Detroit Red Wings",
-    date: new Date("11/29/2023"),
+    date: "11/29/2023",
     time: "7:30 PM ET",
   },
   // December
   {
+    game: 10,
     opponent: "San Jose Sharks",
-    date: new Date("12/03/2023"),
+    date: "12/03/2023",
     time: "6:00 PM ET",
   },
   {
+    game: 11,
     opponent: "Los Angeles Kings",
-    date: new Date("12/10/2023"),
+    date: "12/10/2023",
     time: "7:00 PM ET",
   },
   {
+    game: 12,
     opponent: "Toronto Maple Leafs",
-    date: new Date("12/12/2023"),
+    date: "12/12/2023",
     time: "7:00 PM ET",
   },
   {
+    game: 13,
     opponent: "Anaheim Ducks",
-    date: new Date("12/15/2023"),
+    date: "12/15/2023",
     time: "7:00 PM ET",
   },
   {
+    game: 14,
     opponent: "Edmonton Oilers",
-    date: new Date("12/22/2023"),
+    date: "12/22/2023",
     time: "7:00 PM ET",
   },
   {
+    game: 15,
     opponent: "Buffalo Sabres",
-    date: new Date("12/23/2023"),
+    date: "12/23/2023",
     time: "7:30 PM ET",
   },
   {
+    game: 16,
     opponent: "Washington Capitals",
-    date: new Date("12/27/2023"),
+    date: "12/27/2023",
     time: "7:00 PM ET",
   },
 
   // January
   {
+    game: 17,
     opponent: "Carolina Hurricanes",
-    date: new Date("01/02/2024"),
+    date: "01/02/2024",
     time: "7:00 PM ET",
   },
   {
+    game: 18,
     opponent: "Chicago Blackhawks",
-    date: new Date("01/04/2024"),
+    date: "01/04/2024",
     time: "7:00 PM ET",
   },
   {
+    game: 19,
     opponent: "Vancouver Canucks",
-    date: new Date("01/08/2024"),
+    date: "01/08/2024",
     time: "7:00 PM ET",
   },
   {
+    game: 20,
     opponent: "Washington Capitals",
-    date: new Date("01/14/2024"),
+    date: "01/14/2024",
     time: "1:00 PM ET",
   },
   {
+    game: 21,
     opponent: "Seattle Kraken",
-    date: new Date("01/16/2024"),
+    date: "01/16/2024",
     time: "7:00 PM ET",
   },
   {
+    game: 22,
     opponent: "Las Vegas Golden Knights",
-    date: new Date("01/26/2024"),
+    date: "01/26/2024",
     time: "7:00 PM ET",
   },
 
   // February
   {
+    game: 23,
     opponent: "Colorado Avalanche",
-    date: new Date("02/05/2024"),
+    date: "02/05/2024",
     time: "7:00 PM ET",
   },
   {
+    game: 24,
     opponent: "Tampa Bay Lightning",
-    date: new Date("02/07/2024"),
+    date: "02/07/2024",
     time: "7:00 PM ET",
   },
   {
+    game: 25,
     opponent: "Calgary Flames",
-    date: new Date("02/12/2024"),
+    date: "02/12/2024",
     time: "7:00 PM ET",
   },
   {
+    game: 26,
     opponent: "Montreal Canadiens",
-    date: new Date("02/15/2024"),
+    date: "02/15/2024",
     time: "7:00 PM ET",
   },
   {
+    game: 27,
     opponent: "Dallas Stars",
-    date: new Date("02/20/2024"),
+    date: "02/20/2024",
     time: "7:00 PM ET",
   },
   {
+    game: 28,
     opponent: "Columbus Blue Jackets",
-    date: new Date("02/28/2024"),
+    date: "02/28/2024",
     time: "7:00 PM ET",
   },
   // March
   {
+    game: 29,
     opponent: "Florida Panthers",
-    date: new Date("03/04/2024"),
+    date: "03/04/2024",
     time: "7:00 PM ET",
   },
   {
+    game: 30,
     opponent: "St. Louis Blues",
-    date: new Date("03/09/2024"),
+    date: "03/09/2024",
     time: "7:30 PM ET",
   },
   {
+    game: 31,
     opponent: "New Jersey Devils",
-    date: new Date("03/11/2024"),
+    date: "03/11/2024",
     time: "7:00 PM ET",
   },
   {
+    game: 32,
     opponent: "New York Islanders",
-    date: new Date("03/17/2024"),
+    date: "03/17/2024",
     time: "1:00 PM ET",
   },
   {
+    game: 33,
     opponent: "Winnepeg Jets",
-    date: new Date("03/19/2024"),
+    date: "03/19/2024",
     time: "7:00 PM ET",
   },
   {
+    game: 34,
     opponent: "Florida Panthers",
-    date: new Date("03/23/2024"),
+    date: "03/23/2024",
     time: "8:00 PM ET",
   },
   {
+    game: 35,
     opponent: "Philadelphia",
-    date: new Date("03/26/2024"),
+    date: "03/26/2024",
     time: "7:00 PM ET",
   },
   // April
   {
+    game: 36,
     opponent: "Pittsburgh Penguins",
-    date: new Date("04/01/2024"),
+    date: "04/01/2024",
     time: "7:00 PM ET",
   },
   {
+    game: 37,
     opponent: "New Jersey Devils",
-    date: new Date("04/03/2024"),
+    date: "04/03/2024",
     time: "7:30 PM ET",
   },
   {
+    game: 38,
     opponent: "Montreal Canadiens",
-    date: new Date("04/07/2024"),
+    date: "04/07/2024",
     time: "7:00 PM ET",
   },
   {
+    game: 39,
     opponent: "Philadelphia Flyers",
-    date: new Date("04/11/2024"),
+    date: "04/11/2024",
     time: "7:00 PM ET",
   },
   {
+    game: 40,
     opponent: "New York Islanders",
-    date: new Date("04/13/2024"),
+    date: "04/13/2024",
     time: "12:30 PM ET",
   },
   {
+    game: 41,
     opponent: "Ottawa Senators",
-    date: new Date("04/15/2024"),
+    date: "04/15/2024",
     time: "7:30 PM ET",
   },
 ];

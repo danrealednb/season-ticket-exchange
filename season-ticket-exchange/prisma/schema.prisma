@@ -11,22 +11,44 @@ datasource db {
 }
 
 model User {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  email     String  @unique
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
   password  String
-  role      Role    @default(USER)
-  firstName String  @default("")
-  lastName  String  @default("")
-  verified  Boolean @default(false)
-  paypal    String  @default("")
-  zelle     String  @default("")
-  venmo     String  @default("")
-  section   String  @default("")
-  row       String  @default("")
-  seats     String  @default("")
+  role      Role     @default(USER)
+  firstName String   @default("")
+  lastName  String   @default("")
+  verified  Boolean  @default(false)
+  paypal    String   @default("")
+  zelle     String   @default("")
+  venmo     String   @default("")
+  section   String   @default("")
+  row       String   @default("")
+  seats     String   @default("")
+  Ticket    Ticket[]
 }
 
 enum Role {
   USER
   ADMIN
+}
+
+model Ticket {
+  id                   String       @id @default(auto()) @map("_id") @db.ObjectId
+  game                 String
+  section              String
+  row                  String
+  seats                String
+  aisleSeat            Boolean      @default(false)
+  discountCodeIncluded Boolean      @default(false)
+  status               TicketStatus
+  user                 User         @relation(fields: [userId], references: [id])
+  userId               String       @db.ObjectId
+  // userVerified         Boolean
+}
+
+enum TicketStatus {
+  AVAILABLE
+  PENDING
+  RESERVED
+  SOLD
 }
