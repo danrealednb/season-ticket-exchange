@@ -1,5 +1,5 @@
 import { Outlet } from "@remix-run/react";
-// import { requireUserSession } from "~/data/auth.server";
+import { requireUserSession } from "~/data/auth.server";
 import SideNav from "~/components/NavigationMenu";
 
 export default function MyTicketsLayout() {
@@ -13,7 +13,6 @@ export default function MyTicketsLayout() {
 }
 
 export async function loader({ request }) {
-  //   const userId = await requireUserSession(request);
-  //   return userId;
-  return null;
+  const userId = await requireUserSession(request);
+  return userId;
 }

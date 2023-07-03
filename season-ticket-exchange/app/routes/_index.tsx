@@ -1,5 +1,5 @@
 import { FaTicketAlt, FaHockeyPuck, FaChair } from "react-icons/fa";
-// import { getUserCount, requireUserSession } from "~/data/auth.server";
+import { getUserCount, requireUserSession } from "~/data/auth.server";
 import { useLoaderData, Link } from "@remix-run/react";
 // import { getBrandsCount } from "~/data/brands.server";
 // import { getSpiritsCount } from "~/data/spirits.sever";
@@ -7,6 +7,7 @@ import SideNav from "~/components/NavigationMenu";
 
 export default function Index() {
   const { userId, userCount, brandsCount, spiritsCount } = useLoaderData();
+  // const userId = useLoaderData();
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
       <SideNav />
@@ -65,8 +66,8 @@ export default function Index() {
   );
 }
 export async function loader({ request }) {
-  // const userId = await requireUserSession(request);
-  // return userId;
+  const userId = await requireUserSession(request);
+  return userId;
   // const userCount = await getUserCount();
   // const brandsCount = await getBrandsCount();
   // const spiritsCount = await getSpiritsCount();

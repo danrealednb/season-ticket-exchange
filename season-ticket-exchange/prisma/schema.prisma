@@ -11,7 +11,22 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  email    String @unique
-  password String
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  email     String  @unique
+  password  String
+  role      Role    @default(USER)
+  firstName String  @default("")
+  lastName  String  @default("")
+  verified  Boolean @default(false)
+  paypal    String  @default("")
+  zelle     String  @default("")
+  venmo     String  @default("")
+  section   String  @default("")
+  row       String  @default("")
+  seats     String  @default("")
+}
+
+enum Role {
+  USER
+  ADMIN
 }

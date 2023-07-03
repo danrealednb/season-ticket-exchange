@@ -4,7 +4,8 @@ import { FaBars, FaArrowsAltV } from "react-icons/fa";
 import { useState } from "react";
 
 function SideNav() {
-  //   const userId = useLoaderData();
+  const userId = useLoaderData();
+  const profilePath = `/profile/${userId}`;
 
   const [open, setopen] = useState(true);
   const toggleOpen = () => {
@@ -66,7 +67,7 @@ function SideNav() {
               </li>
               <li className="flex-auto">
                 <NavLink
-                  to="/profile"
+                  to={profilePath}
                   className="text-xl font-bold hover:underline hover:text-red [&.active]:text-red underline decoration-red text-white"
                   end
                 >
