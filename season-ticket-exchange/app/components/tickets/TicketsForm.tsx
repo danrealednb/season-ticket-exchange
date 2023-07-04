@@ -21,12 +21,20 @@ function TicketsForm() {
         section: ticketData.section,
         row: ticketData.row,
         seats: ticketData.seats,
+        price: ticketData.price,
         aisleSeat: ticketData.aisleSeat,
         discountCodeIncluded: ticketData.discountCodeIncluded,
+        notes: ticketData.notes,
       }
     : {
         game: "",
         section: "",
+        row: "",
+        seats: "",
+        price: "",
+        aisleSeat: "",
+        discountCodeIncluded: "",
+        notes: "",
       };
 
   if (params.id && !ticketData) {
@@ -36,10 +44,11 @@ function TicketsForm() {
 
   // const [buttonText, setButtonText] = useState("Cancel");
 
-  const [game, setGame] = useState();
+  const [game, setGame] = useState(defaultValues.game);
   const handleChangeGame = (e) => {
-    const game = e.target.value;
-    setGame(game);
+    const gameS = e.target.value;
+    const gameInfo = schedule.filter((game: GAME) => game.game === gameS)[0];
+    setGame(gameInfo);
   };
 
   const [aisleSeat_cb, setAisleSeatCB] = useState(false);
@@ -105,7 +114,7 @@ function TicketsForm() {
           id="row"
           name="row"
           required
-          defaultValue={defaultValues.section}
+          defaultValue={defaultValues.row}
           placeholder="Enter Row Here"
         />
       </div>
@@ -119,9 +128,28 @@ function TicketsForm() {
           id="seats"
           name="seats"
           required
-          defaultValue={defaultValues.section}
+          defaultValue={defaultValues.seats}
           placeholder="Enter Seats Here"
         />
+      </div>
+      <div className="grid justify-center items-center py-2">
+        <label htmlFor="row" className="text-white py-2 text-center">
+          Price (Per Ticket)
+        </label>
+        <input
+          className="border-2 border-white rounded"
+          type="number"
+          id="price"
+          name="price"
+          required
+          defaultValue={defaultValues.price}
+          placeholder="Enter Price Here"
+          min="0"
+          step="1"
+        />
+      </div>
+      <div className="flex justify-center items-center py-2">
+        <label className="text-white py-2 text-center">Total Price: $150</label>
       </div>
       <div className="flex justify-center items-center space-x-2 py-5">
         <input
@@ -148,6 +176,16 @@ function TicketsForm() {
         <label htmlFor="finished-radio" className="text-white">
           Discount Codes
         </label>
+      </div>
+      <div className="flex justify-center items-center space-x-2 py-5">
+        <textarea
+          className="border-2 border-white rounded"
+          id="notes"
+          name="notes"
+          required
+          defaultValue={defaultValues.notes}
+          placeholder="Enter Notes Here"
+        />
       </div>
       {validationErrors && (
         <ul className="flex justify-center">

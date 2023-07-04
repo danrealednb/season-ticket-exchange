@@ -18,11 +18,13 @@ export async function addTicket(ticketData, userId) {
         section: ticketData.section,
         row: ticketData.row,
         seats: ticketData.seats,
+        price: +ticketData.price,
         aisleSeat: ticketData.aisleSeat,
         discountCodeIncluded: ticketData.discountCodeIncluded,
         status: "AVAILABLE",
         userId,
         // userVerified: ticketData.userVerified,
+        notes: ticketData.notes,
       },
     });
   } catch (error) {
@@ -35,7 +37,7 @@ export async function getUserTickets(userId) {
   try {
     const tickets = await prisma.ticket.findMany({
       where: { userId },
-      orderBy: { date: "asc" },
+      orderBy: { dateAdded: "asc" },
     });
     return tickets;
   } catch (error) {
@@ -61,16 +63,14 @@ export async function updateTicket(id, ticketData) {
     const ticket = await prisma.ticket.update({
       where: { id },
       data: {
-        name: ticketData.opponent,
-        date: ticketData.date,
-        time: ticketData.time,
+        game: ticketData.game,
         section: ticketData.section,
         row: ticketData.row,
         seats: ticketData.seats,
+        price: +ticketData.price,
         aisleSeat: ticketData.aisleSeat,
         discountCodeIncluded: ticketData.discountCodeIncluded,
-        status: ticketData.status,
-        userVerified: ticketData.userVerified,
+        notes: ticketData.notes,
       },
     });
     return ticket;
@@ -95,4 +95,30 @@ export async function getTicket(id) {
 export async function getTicketsCount() {
   const ticketsCount = await prisma.ticket.count({});
   return ticketsCount;
+}
+
+export async function getAvailableTickets() {
+  try {
+    const tickets = await prisma.ticket.findMany({
+      orderBy: { dateAdded: "asc" },
+    });
+    return tickets;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to get tickets.");
+  }
+}
+export async function reserveTicket(id, userId) {
+  try {
+    const ticket = await prisma.ticket.update({
+      where: { id },
+      data: {
+        reservedUser: userId,
+      },
+    });
+    return ticket;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to delete ticket.");
+  }
 }

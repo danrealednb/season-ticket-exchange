@@ -1,19 +1,14 @@
 import { FaPlus, FaTicketAlt } from "react-icons/fa";
 import { Link, useLoaderData } from "@remix-run/react";
-// import BrandsList from "~/components/brands/BrandList";
-// import { getBrands } from "~/data/brands.server";
+import { getUserTickets } from "~/data/tickets.server";
+import TicketList from "~/components/tickets/TicketList";
+import { requireUserSession } from "~/data/auth.server";
 
 export default function MyTicketsPage() {
-  //   const brands = useLoaderData();
-  //   const hasBrands = brands && brands.length > 0;
+  const tickets = useLoaderData();
+  const hasTickets = tickets && tickets.length > 0;
   return (
     <>
-      <h1 className="text-white flex justify-center">
-        My Tickets Page Goes Here
-      </h1>
-      <p className="text-white flex justify-center">
-        Add, Edit, Delete Tickets.
-      </p>
       <main className="">
         <div className="flex justify-center items-center py-5">
           <Link to="add" className="">
@@ -24,28 +19,28 @@ export default function MyTicketsPage() {
           </Link>
         </div>
 
-        {/* {hasBrands && <BrandsList brands={brands} />}
-        {!hasBrands && (
+        {hasTickets && <TicketList tickets={tickets} />}
+        {!hasTickets && (
           <section id="no-events" className="flex justify-center">
             <div className="grid justify-center text-center">
-              <h1 className="text-white">No brands found</h1>
+              <h1 className="text-white">No tickets found</h1>
               <p className="text-white">
                 Start{" "}
                 <Link to="add" className="underline">
-                  adding some
+                  selling some
                 </Link>{" "}
                 today.
               </p>
             </div>
           </section>
-        )} */}
+        )}
       </main>
     </>
   );
 }
 
-export async function loader() {
-  //   const brands = await getBrands();
-  //   return brands;
-  return null;
+export async function loader({ request }) {
+  const userId = await requireUserSession(request);
+  const tickets = await getUserTickets(userId);
+  return tickets;
 }

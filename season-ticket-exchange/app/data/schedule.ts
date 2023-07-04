@@ -263,3 +263,7 @@ export const schedule: Array<GAME> = [
     time: "7:30 PM ET",
   },
 ];
+
+export const gameInfo = (gameId: string) => {
+  return schedule.filter((game: GAME) => game.game === parseInt(gameId))[0];
+};

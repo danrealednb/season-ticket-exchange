@@ -1,18 +1,18 @@
 import { FaPlus } from "react-icons/fa";
 import { Link, useLoaderData } from "@remix-run/react";
-// import BrandsList from "~/components/brands/BrandList";
-// import { getBrands } from "~/data/brands.server";
+import { getAvailableTickets } from "~/data/tickets.server";
+import TicketDetailList from "~/components/tickets/TicketDetailList";
 
 export default function TicketsPage() {
-  //   const brands = useLoaderData();
-  //   const hasBrands = brands && brands.length > 0;
+  const tickets = useLoaderData();
+  const hasTickets = tickets && tickets.length > 0;
   return (
     <>
-      <h1 className="text-white flex justify-center">Tickets Page Goes Here</h1>
+      {/* <h1 className="text-white flex justify-center">Tickets Page Goes Here</h1>
       <p className="text-white flex justify-center">
         This page will have a filter and listing of all available tickets. All
         tickets for past games will be filtered out.
-      </p>
+      </p> */}
       <main className="">
         {/* <div className="flex justify-center py-5">
           <Link to="add" className="">
@@ -23,28 +23,27 @@ export default function TicketsPage() {
           </Link>
         </div> */}
 
-        {/* {hasBrands && <BrandsList brands={brands} />}
-        {!hasBrands && (
+        {hasTickets && <TicketDetailList tickets={tickets} />}
+        {!hasTickets && (
           <section id="no-events" className="flex justify-center">
             <div className="grid justify-center text-center">
-              <h1 className="text-white">No brands found</h1>
+              <h1 className="text-white">No tickets found</h1>
               <p className="text-white">
                 Start{" "}
-                <Link to="add" className="underline">
-                  adding some
+                <Link to="/mytickets/add" className="underline">
+                  selling some
                 </Link>{" "}
                 today.
               </p>
             </div>
           </section>
-        )} */}
+        )}
       </main>
     </>
   );
 }
 
 export async function loader() {
-  //   const brands = await getBrands();
-  //   return brands;
-  return null;
+  const tickets = await getAvailableTickets();
+  return tickets;
 }

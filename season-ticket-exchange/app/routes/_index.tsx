@@ -1,13 +1,12 @@
 import { FaTicketAlt, FaHockeyPuck, FaChair } from "react-icons/fa";
 import { getUserCount, requireUserSession } from "~/data/auth.server";
 import { useLoaderData, Link } from "@remix-run/react";
-// import { getBrandsCount } from "~/data/brands.server";
-// import { getSpiritsCount } from "~/data/spirits.sever";
 import SideNav from "~/components/NavigationMenu";
+import { getTicketsCount } from "~/data/tickets.server";
 
 export default function Index() {
-  const { userId, userCount, brandsCount, spiritsCount } = useLoaderData();
-  // const userId = useLoaderData();
+  const { userId, userCount, ticketCount } = useLoaderData();
+
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
       <SideNav />
@@ -46,31 +45,28 @@ export default function Index() {
           today!
         </p>
       </div>
-      <div className="grid justify-center text-white text-center space-x-2 pt-10 pb-5">
+      <div className="grid justify-center items-center text-white text-center space-x-2 pt-10 pb-5">
         <h2 className="font-bold text-xl underline">Season Ticket Stats</h2>
 
-        <div className="flex justify-center">
+        <div className="flex justify-center space-x-2">
           <label>User Count:</label>
           <p className="font-bold text-yellow underline">{userCount}</p>
         </div>
-        <div className="flex justify-center">
-          <label>Available Ticket Count:</label>
-          <p className="font-bold text-yellow underline">{brandsCount}</p>
+        <div className="flex justify-center space-x-2">
+          <label>Ticket Count:</label>
+          <p className="font-bold text-yellow underline">{ticketCount}</p>
         </div>
-        <div className="flex justify-center">
+        {/* <div className="flex justify-center">
           <label>Sold Ticket Count:</label>
           <p className="font-bold text-yellow underline">{spiritsCount}</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
 }
 export async function loader({ request }) {
   const userId = await requireUserSession(request);
-  return userId;
-  // const userCount = await getUserCount();
-  // const brandsCount = await getBrandsCount();
-  // const spiritsCount = await getSpiritsCount();
-  // return { userId, userCount, brandsCount, spiritsCount };
-  return {};
+  const userCount = await getUserCount();
+  const ticketCount = await getTicketsCount();
+  return { userId, userCount, ticketCount };
 }

@@ -23,11 +23,13 @@ export async function action({ request }) {
     section: ticketData.section,
     row: ticketData.row,
     seats: ticketData.seats,
+    price: ticketData.price,
     aisleSeat: ticketData.aisleSeat === "true",
     discountCodeIncluded: ticketData.discountCodeIncluded === "true",
+    notes: ticketData.notes,
   };
-  console.log(ticketData);
-  console.log(obj);
+  //   console.log("Ticket Data", ticketData);
+  //   console.log("OBJ", obj);
   try {
     await addTicket(obj, userId);
     return redirect("/mytickets");

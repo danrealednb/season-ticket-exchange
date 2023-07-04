@@ -24,6 +24,7 @@ model User {
   section   String   @default("")
   row       String   @default("")
   seats     String   @default("")
+  price     Int      @default(0)
   Ticket    Ticket[]
 }
 
@@ -38,12 +39,16 @@ model Ticket {
   section              String
   row                  String
   seats                String
+  price                Int          @default(0)
   aisleSeat            Boolean      @default(false)
   discountCodeIncluded Boolean      @default(false)
   status               TicketStatus
   user                 User         @relation(fields: [userId], references: [id])
   userId               String       @db.ObjectId
   // userVerified         Boolean
+  dateAdded            DateTime     @default(now())
+  notes                String       @default("")
+  reservedUser         String?      @db.ObjectId
 }
 
 enum TicketStatus {
