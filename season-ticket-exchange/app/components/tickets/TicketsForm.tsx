@@ -20,7 +20,7 @@ function TicketsForm() {
         game: ticketData.game,
         section: ticketData.section,
         row: ticketData.row,
-        seats: ticketData.seats,
+        seats: ticketData.seats.join(","),
         price: ticketData.price,
         aisleSeat: ticketData.aisleSeat,
         discountCodeIncluded: ticketData.discountCodeIncluded,
@@ -43,6 +43,15 @@ function TicketsForm() {
   }
 
   // const [buttonText, setButtonText] = useState("Cancel");
+
+  const [full_price, setFullPrice] = useState(0);
+  const handleChangePrice = (e) => {
+    const priceOneTicket = parseInt(e.target.value);
+    const seats: string = document.getElementById("seats").value;
+    const numberOfTickets = seats.split(",").length;
+    const fullPrice = priceOneTicket * numberOfTickets;
+    setFullPrice(fullPrice);
+  };
 
   const [game, setGame] = useState(defaultValues.game);
   const handleChangeGame = (e) => {
@@ -146,10 +155,13 @@ function TicketsForm() {
           placeholder="Enter Price Here"
           min="0"
           step="1"
+          onChange={handleChangePrice}
         />
       </div>
       <div className="flex justify-center items-center py-2">
-        <label className="text-white py-2 text-center">Total Price: $150</label>
+        <label className="text-white py-2 text-center">
+          Total Price: ${full_price}
+        </label>
       </div>
       <div className="flex justify-center items-center space-x-2 py-5">
         <input
@@ -182,7 +194,6 @@ function TicketsForm() {
           className="border-2 border-white rounded"
           id="notes"
           name="notes"
-          required
           defaultValue={defaultValues.notes}
           placeholder="Enter Notes Here"
         />

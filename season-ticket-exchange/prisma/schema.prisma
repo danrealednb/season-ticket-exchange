@@ -38,7 +38,7 @@ model Ticket {
   game                 String
   section              String
   row                  String
-  seats                String
+  seats                String[]
   price                Int          @default(0)
   aisleSeat            Boolean      @default(false)
   discountCodeIncluded Boolean      @default(false)
@@ -49,6 +49,7 @@ model Ticket {
   dateAdded            DateTime     @default(now())
   notes                String       @default("")
   reservedUser         String?      @db.ObjectId
+  totalPrice           Int          @default(0)
 }
 
 enum TicketStatus {

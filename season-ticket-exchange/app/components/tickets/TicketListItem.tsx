@@ -8,6 +8,9 @@ function TicketListItem({ id, ticket }) {
     (game: GAME) => game.game === parseInt(ticket.game)
   )[0];
 
+  const numberOfSeats = ticket.seats.length;
+  const totalPrice = numberOfSeats * ticket.price;
+
   function deleteExpenseItemHandler() {
     const proceed = confirm(
       `Are you sure? Do you want to delete this ticket? (${
@@ -41,8 +44,27 @@ function TicketListItem({ id, ticket }) {
         <h2 className="expense-title font-bold py-1 text-lg">
           {gameInfo.opponent} {gameInfo.date.toString()} {gameInfo.time}
         </h2>
-        <p>${ticket.price}</p>
-        <p>Total Price $150</p>
+        <div className="flex justify-center space-x-2">
+          <label className="font-bold">Price Per Ticket:</label>
+          <p>${ticket.price}</p>
+        </div>
+        <div className="flex justify-center space-x-2">
+          <label className="font-bold">Section:</label>
+          <p>{ticket.section}</p>
+        </div>
+        <div className="flex justify-center space-x-2">
+          <label className="font-bold">Row:</label>
+          <p>{ticket.row}</p>
+        </div>
+        <div className="flex justify-center space-x-2">
+          <label className="font-bold">Seats:</label>
+          <p>{ticket.seats.join(",")}</p>
+          <p className="font-bold">({numberOfSeats})</p>
+        </div>
+        <div className="flex justify-center space-x-2">
+          <label className="font-bold">Total Price:</label>
+          <p>${totalPrice}</p>
+        </div>
       </div>
       <menu className="expense-actions flex justify-center items-center py-5 space-x-2">
         <button className="px-1 py-1 bg-dark-blue text-white rounded">

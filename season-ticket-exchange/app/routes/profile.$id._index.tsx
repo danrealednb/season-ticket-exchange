@@ -33,6 +33,10 @@ export default function MyTicketsPage() {
 }
 
 export async function loader({ request, params }) {
+  const userId = await requireUserSession(request);
+  if (!userId) {
+    redirect("/auth?mode=login");
+  }
   if (!params) {
     const userId = await requireUserSession(request);
     const profile = await getUserProfile(userId);

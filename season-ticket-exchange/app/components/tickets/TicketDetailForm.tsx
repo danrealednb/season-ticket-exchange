@@ -7,10 +7,14 @@ import {
   useActionData,
 } from "@remix-run/react";
 import { gameInfo } from "~/data/schedule";
+import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
 function TicketDetailForm() {
   const ticketData = useLoaderData();
   const game = gameInfo(ticketData.game);
+
+  const numberOfSeats = ticketData.seats.length;
+  const totalPrice = numberOfSeats * ticketData.price;
 
   return (
     <Form method="post" className="form" id="ticket-detail-form">
@@ -37,16 +41,29 @@ function TicketDetailForm() {
         </div>
         <div className="flex justify-center items-center space-x-2 text-center">
           <label className="font-bold">Seats:</label>
-          <p>{ticketData.seats}</p>
+          <p>{ticketData.seats.join(",")}</p>
+          <p className="font-bold">({numberOfSeats})</p>
         </div>
 
         <div className="flex justify-center items-center space-x-2 text-center">
           <label className="font-bold">Aisle Seat:</label>
-          <p>{ticketData.aisleSeat}</p>
+          <p>
+            {ticketData.aisleSeat === true ? (
+              <FaCheckCircle className="text-green text-l" />
+            ) : (
+              <FaTimesCircle className="text-red text-l" />
+            )}
+          </p>
         </div>
         <div className="flex justify-center items-center space-x-2 text-center">
           <label className="font-bold">Discount Code:</label>
-          <p>{ticketData.discountCodeIncluded}</p>
+          <p>
+            {ticketData.discountCodeIncluded === true ? (
+              <FaCheckCircle className="text-green text-l" />
+            ) : (
+              <FaTimesCircle className="text-red text-l" />
+            )}
+          </p>
         </div>
 
         <div className="flex justify-center items-center space-x-2 text-center">
@@ -55,10 +72,10 @@ function TicketDetailForm() {
         </div>
         <div className="flex justify-center items-center space-x-2 text-center">
           <label className="font-bold">Total Price:</label>
-          <p>$150</p>
+          <p>${totalPrice}</p>
         </div>
         <div className="grid justify-center items-center space-x-2 text-center">
-          <label className="font-bold">Notes:</label>
+          <label className="font-bold underline">Notes</label>
           <p>{ticketData.notes}</p>
         </div>
         <div className="flex justify-center items-center py-2">

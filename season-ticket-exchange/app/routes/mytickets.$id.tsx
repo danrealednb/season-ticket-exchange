@@ -18,11 +18,12 @@ export async function action({ params, request }) {
   if (request.method === "PATCH") {
     const formData = await request.formData();
     const ticketData = Object.fromEntries(formData);
+    const seats = ticketData.seats.split(",");
     const obj = {
       game: ticketData.game,
       section: ticketData.section,
       row: ticketData.row,
-      seats: ticketData.seats,
+      seats: seats,
       price: ticketData.price,
       aisleSeat: ticketData.aisleSeat === "true",
       discountCodeIncluded: ticketData.discountCodeIncluded === "true",

@@ -1,4 +1,10 @@
-import { NavLink, Form, useLoaderData, Link } from "@remix-run/react";
+import {
+  NavLink,
+  Form,
+  useLoaderData,
+  Link,
+  useMatches,
+} from "@remix-run/react";
 import Logo from "~/components/utils/Logo";
 import { FaBars, FaArrowsAltV } from "react-icons/fa";
 import { useState } from "react";
@@ -6,6 +12,13 @@ import { useState } from "react";
 function SideNav() {
   const userId = useLoaderData();
   const profilePath = `/profile/${userId}`;
+  //   const profilePath = userId ? `/profile/${userId}` : "/auth";
+
+  const matches = useMatches();
+  console.log(matches);
+  const { pathname } = matches[matches.length - 1];
+  //   const matchedRouteHome = pathname === "/" ? true : false;
+  //   const matchedRouteTickets = pathname === "/tickets/" ? true : false;
 
   const [open, setopen] = useState(true);
   const toggleOpen = () => {
@@ -74,36 +87,23 @@ function SideNav() {
                   Profile
                 </NavLink>
               </li>
-              {/* <li className="flex-auto">
-                <NavLink
-                  to="/collection"
-                  className="text-xl font-bold hover:underline hover:text-red [&.active]:text-red underline decoration-red text-white"
-                  end
-                >
-                  Collection
-                </NavLink>
-              </li> */}
+
               <li className="flex-auto text-white">
-                <Form
-                  method="post"
-                  id="logout-form"
-                  action="/logout"
-                  className="pr-5"
-                >
-                  <button>Logout</button>
-                </Form>
-                {/* <Form method="post" id="logout-form" action="/logout">
-                {userId && (
-                    <button className="text-yellow font-bold text-xl rounded underline">
-                      Logout
-                    </button>
-                  )}
-                </Form>
                 {!userId && (
                   <Link to="/auth" className="cta">
-                    Login
+                    <button className="underline">Login</button>
                   </Link>
-                )} */}
+                )}
+                {userId && (
+                  <Form
+                    method="post"
+                    id="logout-form"
+                    action="/logout"
+                    className="pr-5"
+                  >
+                    <button className="underline">Logout</button>
+                  </Form>
+                )}
               </li>
             </ul>
           </nav>
