@@ -16,7 +16,7 @@ export default function Index() {
       </h1>
       <div className="grid justify-center">
         <p className="text-white text-center px-5">
-          Season Ticket Exchance is for the real fans of the game. It's for the
+          Season Ticket Exchange is for the real fans of the game. It's for the
           season ticket holders looking to put their seats in the hands of fans
           who are looking for tickets at face value without all the absurd fees
           like on other sites.

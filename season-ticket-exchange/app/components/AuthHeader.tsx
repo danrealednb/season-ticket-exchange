@@ -6,7 +6,7 @@ function AuthHeader() {
   // console.log("---LOADER DATA USER ID AUTH HEADER---", userId);
   return (
     <header id="main-header">
-      <div className="flex justify-center items-center space-x-2">
+      <div className="flex justify-center items-center text-center space-x-2">
         <h1 className="text-white text-xl">
           New York Rangers Season Ticket Exchange
         </h1>
