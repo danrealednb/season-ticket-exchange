@@ -31,7 +31,7 @@ function TicketFilter({ path }) {
           <select
             id="query"
             name="query"
-            className="border-2 border-white rounded text-center"
+            className="border-2 border-white rounded text-center w-64"
             defaultValue={game}
             onChange={handleChangeGame}
           >

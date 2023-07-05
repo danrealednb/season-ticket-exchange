@@ -100,7 +100,7 @@ function TicketsForm() {
           id="game"
           name="game"
           onChange={handleChangeGame}
-          className="border-2 border-white rounded text-center"
+          className="border-2 border-white rounded text-center w-80"
           defaultValue={game}
         >
           {getRemainingSchedule().map((game: GAME) => {
