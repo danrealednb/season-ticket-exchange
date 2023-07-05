@@ -1,9 +1,20 @@
+import boston_bruins from "../../public/team_logos/boston_bruins.svg";
+import carolina_hurricanes from "../../public/team_logos/carolina_hurricanes.svg";
+import buffalo_sabres from "../../public/team_logos/buffalo_sabres.svg";
+import detroit_redwings from "../../public/team_logos/detroit_redwings.svg";
+import florida_panthers from "../../public/team_logos/florida_panthers.svg";
+import montreal_canadiens from "../../public/team_logos/montreal_canadiens.svg";
+import ottawa_senators from "../../public/team_logos/ottawa_senators.svg";
+import tampa_bay_lightning from "../../public/team_logos/tampa_bay_lightning.svg";
+import toronto_maple_leafs from "../../public/team_logos/toronto_maple_leafs.svg";
+
 export interface GAME {
   game: number;
   opponent: string;
   date: string;
   time: string;
   gameType: GAME_TYPE;
+  teamLogo?: string;
 }
 
 export enum GAME_TYPE {
@@ -38,6 +49,7 @@ export const schedule: Array<GAME> = [
     date: "10/05/2023",
     time: "7:00 PM ET",
     gameType: GAME_TYPE.PRE_SEASON,
+    teamLogo: boston_bruins,
   },
 
   {
@@ -61,6 +73,7 @@ export const schedule: Array<GAME> = [
     date: "11/02/2023",
     time: "7:00 PM ET",
     gameType: GAME_TYPE.REGULAR_SEASON,
+    teamLogo: carolina_hurricanes,
   },
   {
     game: 7,
@@ -68,6 +81,7 @@ export const schedule: Array<GAME> = [
     date: "11/07/2023",
     time: "7:30 PM ET",
     gameType: GAME_TYPE.REGULAR_SEASON,
+    teamLogo: detroit_redwings,
   },
   {
     game: 8,
@@ -96,6 +110,7 @@ export const schedule: Array<GAME> = [
     date: "11/27/2023",
     time: "7:00 PM ET",
     gameType: GAME_TYPE.REGULAR_SEASON,
+    teamLogo: buffalo_sabres,
   },
   {
     game: 12,
@@ -103,6 +118,7 @@ export const schedule: Array<GAME> = [
     date: "11/29/2023",
     time: "7:30 PM ET",
     gameType: GAME_TYPE.REGULAR_SEASON,
+    teamLogo: detroit_redwings,
   },
   // December
   {
@@ -125,6 +141,7 @@ export const schedule: Array<GAME> = [
     date: "12/12/2023",
     time: "7:00 PM ET",
     gameType: GAME_TYPE.REGULAR_SEASON,
+    teamLogo: toronto_maple_leafs,
   },
   {
     game: 16,
@@ -146,6 +163,7 @@ export const schedule: Array<GAME> = [
     date: "12/23/2023",
     time: "7:30 PM ET",
     gameType: GAME_TYPE.REGULAR_SEASON,
+    teamLogo: buffalo_sabres,
   },
   {
     game: 19,
@@ -213,6 +231,7 @@ export const schedule: Array<GAME> = [
     date: "02/07/2024",
     time: "7:00 PM ET",
     gameType: GAME_TYPE.REGULAR_SEASON,
+    teamLogo: tampa_bay_lightning,
   },
   {
     game: 28,
@@ -227,6 +246,7 @@ export const schedule: Array<GAME> = [
     date: "02/15/2024",
     time: "7:00 PM ET",
     gameType: GAME_TYPE.REGULAR_SEASON,
+    teamLogo: montreal_canadiens,
   },
   {
     game: 30,
@@ -249,6 +269,7 @@ export const schedule: Array<GAME> = [
     date: "03/04/2024",
     time: "7:00 PM ET",
     gameType: GAME_TYPE.REGULAR_SEASON,
+    teamLogo: florida_panthers,
   },
   {
     game: 33,
@@ -284,6 +305,7 @@ export const schedule: Array<GAME> = [
     date: "03/23/2024",
     time: "8:00 PM ET",
     gameType: GAME_TYPE.REGULAR_SEASON,
+    teamLogo: florida_panthers,
   },
   {
     game: 38,
@@ -313,6 +335,7 @@ export const schedule: Array<GAME> = [
     date: "04/07/2024",
     time: "7:00 PM ET",
     gameType: GAME_TYPE.REGULAR_SEASON,
+    teamLogo: montreal_canadiens,
   },
   {
     game: 42,
@@ -334,6 +357,7 @@ export const schedule: Array<GAME> = [
     date: "04/15/2024",
     time: "7:30 PM ET",
     gameType: GAME_TYPE.REGULAR_SEASON,
+    teamLogo: ottawa_senators,
   },
 ];
 
@@ -347,4 +371,11 @@ export const getRemainingSchedule = () => {
     (game: GAME) => new Date(game.date) >= todaysDate
   );
   return remainingGames;
+};
+
+export const getTeamLogo = (gameId: string) => {
+  const logo = schedule.filter(
+    (game: GAME) => game.game === parseInt(gameId)
+  )[0].teamLogo;
+  return logo;
 };

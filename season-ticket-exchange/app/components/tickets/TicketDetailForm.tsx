@@ -19,6 +19,8 @@ function TicketDetailForm() {
   return (
     <Form method="post" className="form" id="ticket-detail-form">
       <div className="grid justify-center items-center space-y-2 text-center text-white">
+        <img className="object-scale-down h-24 w-96" src={game.teamLogo} />
+
         <div className="flex justify-center items-center space-x-2 text-center">
           <label className="font-bold">{game.gameType} Game</label>
         </div>

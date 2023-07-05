@@ -54,10 +54,21 @@ function TicketsForm() {
   };
 
   const [game, setGame] = useState(defaultValues.game);
+
+  const setDefaultLogo =
+    schedule.filter(
+      (game: GAME) => game.game === parseInt(defaultValues.game)
+    )[0]?.teamLogo || "";
+
+  const [team_logo, setTeamLogo] = useState(setDefaultLogo);
+
   const handleChangeGame = (e) => {
     const gameS = e.target.value;
-    const gameInfo = schedule.filter((game: GAME) => game.game === gameS)[0];
+    const gameInfo = schedule.filter(
+      (game: GAME) => game.game === parseInt(gameS)
+    )[0];
     setGame(gameInfo);
+    setTeamLogo(gameInfo.teamLogo);
   };
 
   const [aisleSeat_cb, setAisleSeatCB] = useState(defaultValues.aisleSeat);
@@ -102,6 +113,11 @@ function TicketsForm() {
           })}
         </select>
       </p>
+
+      <div className="grid justify-center items-center py-2">
+        <img className="object-scale-down h-24 w-96" src={team_logo} />
+      </div>
+
       <div className="grid justify-center items-center py-2">
         <label htmlFor="section" className="text-white py-2 text-center">
           Section
