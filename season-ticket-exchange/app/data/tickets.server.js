@@ -93,12 +93,28 @@ export async function getTicketsCount() {
   return ticketsCount;
 }
 
+export async function getAvailableTicketsSearch(game) {
+  try {
+    const tickets = await prisma.ticket.findMany({
+      orderBy: { game: "asc" },
+      where: {
+        game: game,
+      },
+    });
+    return tickets;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to get tickets.");
+  }
+}
 export async function getAvailableTickets() {
   const todaysDate = new Date();
   try {
     const tickets = await prisma.ticket.findMany({
       orderBy: { game: "asc" },
-      where: { gameDate: { gte: todaysDate } },
+      where: {
+        gameDate: { gte: todaysDate },
+      },
     });
     return tickets;
   } catch (error) {
