@@ -16,6 +16,16 @@ import new_york_rangers from "../../public/team_logos/new_york_rangers.svg";
 import philadelphia_flyers from "../../public/team_logos/philadelphia_flyers.svg";
 import pittsburgh_penguins from "../../public/team_logos/pittsburgh_penguins.svg";
 import washington_capitals from "../../public/team_logos/washington_capitals.svg";
+// central
+import arizona_coyotes from "../../public/team_logos/arizona_coyotes.svg";
+import chicago_blackhawks from "../../public/team_logos/chicago_blackhawks.svg";
+import colorado_avalanche from "../../public/team_logos/colorado_avalanche.svg";
+import dallas_stars from "../../public/team_logos/dallas_stars.svg";
+import minnesota_wild from "../../public/team_logos/minnesota_wild.svg";
+import nashville_predators from "../../public/team_logos/nashville_predators.svg";
+import st_louis_blues from "../../public/team_logos/st_louis_blues.svg";
+import winnipeg_jets from "../../public/team_logos/winnipeg_jets.svg";
+//pacific
 
 export interface GAME {
   game: number;
@@ -51,6 +61,7 @@ export const schedule: Array<GAME> = [
     date: "09/28/2023",
     time: "7:00 PM ET",
     gameType: GAME_TYPE.PRE_SEASON,
+    teamLogo: new_jersey_devils,
   },
   // October
   {
@@ -68,6 +79,7 @@ export const schedule: Array<GAME> = [
     date: "10/16/2023",
     time: "7:00 PM ET",
     gameType: GAME_TYPE.REGULAR_SEASON,
+    teamLogo: arizona_coyotes,
   },
   {
     game: 5,
@@ -75,6 +87,7 @@ export const schedule: Array<GAME> = [
     date: "10/19/2023",
     time: "7:00 PM ET",
     gameType: GAME_TYPE.REGULAR_SEASON,
+    teamLogo: nashville_predators,
   },
   // November
   {
@@ -99,6 +112,7 @@ export const schedule: Array<GAME> = [
     date: "11/09/2023",
     time: "7:00 PM ET",
     gameType: GAME_TYPE.REGULAR_SEASON,
+    teamLogo: minnesota_wild,
   },
   {
     game: 9,
@@ -199,6 +213,7 @@ export const schedule: Array<GAME> = [
     date: "01/04/2024",
     time: "7:00 PM ET",
     gameType: GAME_TYPE.REGULAR_SEASON,
+    teamLogo: chicago_blackhawks,
   },
   {
     game: 22,
@@ -237,6 +252,7 @@ export const schedule: Array<GAME> = [
     date: "02/05/2024",
     time: "7:00 PM ET",
     gameType: GAME_TYPE.REGULAR_SEASON,
+    teamLogo: colorado_avalanche,
   },
   {
     game: 27,
@@ -267,6 +283,7 @@ export const schedule: Array<GAME> = [
     date: "02/20/2024",
     time: "7:00 PM ET",
     gameType: GAME_TYPE.REGULAR_SEASON,
+    teamLogo: dallas_stars,
   },
   {
     game: 31,
@@ -291,6 +308,7 @@ export const schedule: Array<GAME> = [
     date: "03/09/2024",
     time: "7:30 PM ET",
     gameType: GAME_TYPE.REGULAR_SEASON,
+    teamLogo: st_louis_blues,
   },
   {
     game: 34,
@@ -314,6 +332,7 @@ export const schedule: Array<GAME> = [
     date: "03/19/2024",
     time: "7:00 PM ET",
     gameType: GAME_TYPE.REGULAR_SEASON,
+    teamLogo: winnipeg_jets,
   },
   {
     game: 37,
