@@ -11,13 +11,18 @@ import { useState } from "react";
 
 function SideNav() {
   const userId = useLoaderData();
-  const profilePath = `/profile/${userId}`;
+  console.log("USER ID FROM NAV MENU", userId);
+  //   const profilePath = `/profile/${userId}`;
   //   const profilePath = userId ? `/profile/${userId}` : "/auth";
 
   const matches = useMatches();
-  console.log(matches);
+  // console.log(matches);
   const { pathname } = matches[matches.length - 1];
-  //   const matchedRouteHome = pathname === "/" ? true : false;
+  const matchedRouteHome = pathname === "/" ? true : false;
+  const profilePath = matchedRouteHome
+    ? `/profile/${userId.userId}`
+    : `/profile/${userId}`;
+
   //   const matchedRouteTickets = pathname === "/tickets/" ? true : false;
 
   const [open, setopen] = useState(true);

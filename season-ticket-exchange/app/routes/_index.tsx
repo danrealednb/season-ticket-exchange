@@ -5,7 +5,7 @@ import SideNav from "~/components/NavigationMenu";
 import { getTicketsCount } from "~/data/tickets.server";
 
 export default function Index() {
-  const { userCount, ticketCount } = useLoaderData();
+  const { useriId, userCount, ticketCount } = useLoaderData();
 
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
@@ -65,8 +65,8 @@ export default function Index() {
   );
 }
 export async function loader({ request }) {
-  // const userId = await requireUserSession(request);
+  const userId = await requireUserSession(request);
   const userCount = await getUserCount();
   const ticketCount = await getTicketsCount();
-  return { userCount, ticketCount };
+  return { userId, userCount, ticketCount };
 }

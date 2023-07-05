@@ -6,7 +6,7 @@ import { requireUserSession } from "~/data/auth.server";
 export default function AddTicketsPage() {
   return (
     <>
-      <h1 className="text-white text-xl flex justify-center py-5">
+      <h1 className="text-white text-xl flex justify-center py-5 underline font-bold text-2xl">
         Sell Tickets
       </h1>
       <TicketsForm />

@@ -12,7 +12,7 @@ import {
 } from "~/data/validation.server";
 
 export default function MyTicketsPage() {
-  const profile = useLoaderData();
+  // const profile = useLoaderData();
 
   return (
     <>
@@ -76,8 +76,8 @@ export async function action({ request }) {
   } else if (request.method === "POST") {
     const formData = await request.formData();
     const profileData = Object.fromEntries(formData);
-    console.log("TRYING TO VERIFY SELLER");
-    console.log(profileData);
+    // console.log("TRYING TO VERIFY SELLER");
+    // console.log(profileData);
 
     try {
       // validateProfileSeatInformation(profileData);
