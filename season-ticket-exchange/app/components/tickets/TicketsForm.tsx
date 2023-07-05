@@ -60,13 +60,15 @@ function TicketsForm() {
     setGame(gameInfo);
   };
 
-  const [aisleSeat_cb, setAisleSeatCB] = useState(false);
+  const [aisleSeat_cb, setAisleSeatCB] = useState(defaultValues.aisleSeat);
 
   const handleAisleSeatCB = (e) => {
     setAisleSeatCB(e.target.checked);
   };
 
-  const [discountCode_cb, setDiscountCodeCB] = useState(false);
+  const [discountCode_cb, setDiscountCodeCB] = useState(
+    defaultValues.discountCodeIncluded
+  );
 
   const handleDiscountCodeCB = (e) => {
     setDiscountCodeCB(e.target.checked);
