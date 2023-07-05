@@ -20,6 +20,9 @@ function TicketDetailForm() {
     <Form method="post" className="form" id="ticket-detail-form">
       <div className="grid justify-center items-center space-y-2 text-center text-white">
         <div className="flex justify-center items-center space-x-2 text-center">
+          <label className="font-bold">{game.gameType} Game</label>
+        </div>
+        <div className="flex justify-center items-center space-x-2 text-center">
           <label className="font-bold">Opponent:</label>
           <p>{game.opponent}</p>
         </div>

@@ -11,9 +11,6 @@ import { useState } from "react";
 
 function SideNav() {
   const userId = useLoaderData();
-  console.log("USER ID FROM NAV MENU", userId);
-  //   const profilePath = `/profile/${userId}`;
-  //   const profilePath = userId ? `/profile/${userId}` : "/auth";
 
   const matches = useMatches();
   // console.log(matches);
@@ -22,8 +19,6 @@ function SideNav() {
   const profilePath = matchedRouteHome
     ? `/profile/${userId.userId}`
     : `/profile/${userId}`;
-
-  //   const matchedRouteTickets = pathname === "/tickets/" ? true : false;
 
   const [open, setopen] = useState(true);
   const toggleOpen = () => {
@@ -39,10 +34,7 @@ function SideNav() {
         <Logo />
       </div>
       <div className="flex justify-center items-center text-white ">
-        <button
-          // className="flex justify-end px-10 py-10 text-white"
-          onClick={toggleOpen}
-        >
+        <button onClick={toggleOpen}>
           {open && <FaArrowsAltV className="text-red" />}
           {!open && <FaBars className="text-red" />}
         </button>

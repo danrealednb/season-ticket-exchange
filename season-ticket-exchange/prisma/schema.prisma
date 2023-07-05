@@ -35,7 +35,7 @@ enum Role {
 
 model Ticket {
   id                   String       @id @default(auto()) @map("_id") @db.ObjectId
-  game                 String
+  game                 Int
   section              String
   row                  String
   seats                String[]
@@ -50,6 +50,7 @@ model Ticket {
   notes                String       @default("")
   reservedUser         String?      @db.ObjectId
   totalPrice           Int          @default(0)
+  gameDate             DateTime
 }
 
 enum TicketStatus {

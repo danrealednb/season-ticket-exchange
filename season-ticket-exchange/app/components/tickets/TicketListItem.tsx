@@ -5,7 +5,7 @@ function TicketListItem({ id, ticket }) {
   const fetcher = useFetcher();
 
   const gameInfo = schedule.filter(
-    (game: GAME) => game.game === parseInt(ticket.game)
+    (game: GAME) => game.game === ticket.game
   )[0];
 
   const numberOfSeats = ticket.seats.length;
@@ -32,7 +32,7 @@ function TicketListItem({ id, ticket }) {
       <article className="expense-item locked">
         <p className="text-white">
           Deleting Tickets for {gameInfo.opponent} {gameInfo.date.toString()}{" "}
-          {gameInfo.time}...
+          {gameInfo.time} ({gameInfo.gameType})...
         </p>
       </article>
     );
@@ -42,7 +42,8 @@ function TicketListItem({ id, ticket }) {
     <article className="expense-item">
       <div className="grid justify-center items-center text-center text-white">
         <h2 className="expense-title font-bold py-1 text-lg">
-          {gameInfo.opponent} {gameInfo.date.toString()} {gameInfo.time}
+          {gameInfo.opponent} {gameInfo.date.toString()} {gameInfo.time} (
+          {gameInfo.gameType})
         </h2>
         <div className="flex justify-center space-x-2">
           <label className="font-bold">Price Per Ticket:</label>

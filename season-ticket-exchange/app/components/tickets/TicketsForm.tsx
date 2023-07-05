@@ -7,7 +7,7 @@ import {
   useActionData,
 } from "@remix-run/react";
 import { useState } from "react";
-import { GAME, schedule } from "~/data/schedule";
+import { GAME, schedule, getRemainingSchedule } from "~/data/schedule";
 
 function TicketsForm() {
   const ticketData = useLoaderData();
@@ -90,10 +90,11 @@ function TicketsForm() {
           className="border-2 border-white rounded"
           defaultValue={game}
         >
-          {schedule.map((game: GAME) => {
+          {getRemainingSchedule().map((game: GAME) => {
             return (
               <option key={game.game} value={game.game}>
-                {game.opponent} {game.date.toString()} {game.time}
+                {game.opponent} {game.date.toString()} {game.time} (
+                {game.gameType})
               </option>
             );
           })}
