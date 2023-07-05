@@ -44,12 +44,22 @@ function TicketsForm() {
 
   // const [buttonText, setButtonText] = useState("Cancel");
 
-  const [full_price, setFullPrice] = useState(0);
+  const [full_price, setFullPrice] = useState(
+    defaultValues.seats.split(",").length * defaultValues.price || 0
+  );
   const handleChangePrice = (e) => {
     const priceOneTicket = parseInt(e.target.value);
     const seats: string = document.getElementById("seats").value;
     const numberOfTickets = seats.split(",").length;
     const fullPrice = priceOneTicket * numberOfTickets;
+    setFullPrice(fullPrice);
+  };
+
+  const handleSeatChange = (e) => {
+    const seats = e.target.value;
+    const numberOfSeats = seats.split(",").length;
+    const price: number = parseInt(document.getElementById("price").value) || 0;
+    const fullPrice = price * numberOfSeats;
     setFullPrice(fullPrice);
   };
 
@@ -158,6 +168,7 @@ function TicketsForm() {
           required
           defaultValue={defaultValues.seats}
           placeholder="Enter Seats Here"
+          onChange={handleSeatChange}
         />
       </div>
       <div className="grid justify-center items-center py-2">
