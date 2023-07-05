@@ -87,6 +87,11 @@ function TicketListItem({ id, ticket }) {
           <label className="font-bold underline">Notes</label>
           <p>{ticket.notes}</p>
         </div>
+
+        <div className="grid justify-center space-x-2">
+          <label className="font-bold underline">Status</label>
+          <p>{ticket.status}</p>
+        </div>
       </div>
       <menu className="expense-actions flex justify-center items-center py-5 space-x-2">
         <button className="px-1 py-1 bg-red text-white rounded">

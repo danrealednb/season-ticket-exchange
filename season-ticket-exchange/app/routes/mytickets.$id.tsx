@@ -1,6 +1,12 @@
 import { redirect } from "@remix-run/node";
 import TicketsForm from "~/components/tickets/TicketsForm";
-import { deleteTicket, getTicket, updateTicket } from "~/data/tickets.server";
+import {
+  deleteTicket,
+  getTicket,
+  unReserveTicket,
+  updateTicket,
+  updateTicketAsSold,
+} from "~/data/tickets.server";
 
 export default function UpdateTicketsPage() {
   return (
@@ -35,6 +41,14 @@ export async function action({ params, request }) {
     await deleteTicket(ticketId);
     return redirect("/mytickets");
     // return { deletedId: data };
+  } else if (request.method === "POST") {
+    console.log("---UNRESERVING---");
+    await unReserveTicket(ticketId);
+    return redirect("/mytickets");
+  } else if (request.method === "PUT") {
+    console.log("---SELLING---");
+    await updateTicketAsSold(ticketId);
+    return redirect("/mytickets");
   }
 }
 

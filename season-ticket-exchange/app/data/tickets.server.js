@@ -122,17 +122,55 @@ export async function getAvailableTickets() {
     throw new Error("Failed to get tickets.");
   }
 }
-export async function reserveTicket(id, userId) {
+export async function reserveTicket(id, userEmail) {
   try {
     const ticket = await prisma.ticket.update({
       where: { id },
       data: {
-        reservedUser: userId,
+        // reservedUser: userId,
+        buyer: userEmail,
+        status: "RESERVED",
       },
     });
     return ticket;
   } catch (error) {
     console.log(error);
-    throw new Error("Failed to delete ticket.");
+    throw new Error("Failed to reserve ticket.");
+  }
+}
+
+export async function unReserveTicket(id) {
+  try {
+    const ticket = await prisma.ticket.update({
+      where: { id },
+      // data: {
+      //   reservedUser: null,
+      // },
+      data: {
+        buyer: {
+          set: "",
+        },
+        status: "AVAILABLE",
+      },
+    });
+    return ticket;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to unreserve ticket.");
+  }
+}
+
+export async function updateTicketAsSold(id) {
+  try {
+    const ticket = await prisma.ticket.update({
+      where: { id },
+      data: {
+        status: "SOLD",
+      },
+    });
+    return ticket;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to sell ticket.");
   }
 }

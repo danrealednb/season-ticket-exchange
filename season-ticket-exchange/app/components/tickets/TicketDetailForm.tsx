@@ -9,6 +9,17 @@ import {
 import { gameInfo } from "~/data/schedule";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
+function ReserveTicketItemHandler() {
+  const proceed = confirm(
+    `Are you sure? Do you want to reserve these tickets?`
+  );
+
+  if (!proceed) {
+    return;
+  }
+  //   alert("Reserved!");
+}
+
 function TicketDetailForm() {
   const ticketData = useLoaderData();
   const game = gameInfo(ticketData.game);
@@ -83,9 +94,21 @@ function TicketDetailForm() {
           <label className="font-bold underline">Notes</label>
           <p>{ticketData.notes}</p>
         </div>
-        <div className="flex justify-center items-center py-2">
-          <button className="rounded bg-red px-2">Reserve Tickets</button>
+        <div className="grid justify-center space-x-2">
+          <label className="font-bold underline">Status</label>
+          <p>{ticketData.status}</p>
         </div>
+
+        {ticketData.status === "AVAILABLE" && (
+          <div className="flex justify-center items-center py-2">
+            <button
+              className="rounded bg-red px-2"
+              onClick={ReserveTicketItemHandler}
+            >
+              Reserve Tickets
+            </button>
+          </div>
+        )}
       </div>
     </Form>
   );

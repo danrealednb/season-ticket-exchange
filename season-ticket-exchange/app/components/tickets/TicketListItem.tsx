@@ -1,4 +1,4 @@
-import { Link, useFetcher } from "@remix-run/react";
+import { Link, useFetcher, Form } from "@remix-run/react";
 import { GAME, schedule } from "~/data/schedule";
 
 function TicketListItem({ id, ticket }) {
@@ -10,6 +10,8 @@ function TicketListItem({ id, ticket }) {
 
   const numberOfSeats = ticket.seats.length;
   const totalPrice = numberOfSeats * ticket.price;
+  const ticketStatus = ticket.status;
+  console.log("TICKET STATUS", ticketStatus);
 
   function deleteExpenseItemHandler() {
     const proceed = confirm(
@@ -31,11 +33,47 @@ function TicketListItem({ id, ticket }) {
     return (
       <article className="expense-item locked">
         <p className="text-white">
-          Deleting Tickets for {gameInfo.opponent} {gameInfo.date.toString()}{" "}
-          {gameInfo.time} ({gameInfo.gameType})...
+          Deleting/Unreserving Tickets for {gameInfo.opponent}{" "}
+          {gameInfo.date.toString()} {gameInfo.time} ({gameInfo.gameType})...
         </p>
       </article>
     );
+  }
+
+  const emailContact = `mailto:${ticket.buyer}?subject=Rangers%20Tickets`;
+
+  function unReserveTicketItemHandler() {
+    const proceed = confirm(
+      `Are you sure? Do you want to put this ticket back on the market? (${
+        gameInfo.opponent
+      } ${gameInfo.date.toString()} ${gameInfo.time})`
+    );
+
+    if (!proceed) {
+      return;
+    }
+    fetcher.submit(null, {
+      method: "post",
+      action: `/mytickets/${id}`,
+    });
+    alert("Your Tickets Are Back On the Market");
+  }
+
+  function SellTicketItemHandler() {
+    const proceed = confirm(
+      `Are you sure? Do you want to mark this ticket as sold? (${
+        gameInfo.opponent
+      } ${gameInfo.date.toString()} ${gameInfo.time})`
+    );
+
+    if (!proceed) {
+      return;
+    }
+    fetcher.submit(null, {
+      method: "put",
+      action: `/mytickets/${id}`,
+    });
+    alert("Your Tickets Are Now Sold!");
   }
 
   return (
@@ -86,6 +124,28 @@ function TicketListItem({ id, ticket }) {
         >
           Delete
         </button>
+        {ticketStatus === "RESERVED" && (
+          <div className="expense-actions flex justify-center items-center space-x-2">
+            <button
+              className="px-1 py-1 bg-red text-white rounded"
+              onClick={unReserveTicketItemHandler}
+            >
+              Market
+            </button>
+            <button
+              className="px-1 py-1 bg-red text-white rounded"
+              onClick={SellTicketItemHandler}
+            >
+              Sold
+            </button>
+            <a className="underline" href={emailContact}>
+              Email Buyer
+            </a>
+          </div>
+        )}
+        {ticketStatus === "SOLD" && (
+          <p className="font-bold text-gray">Sold ({ticket.buyer})</p>
+        )}
       </menu>
     </article>
   );

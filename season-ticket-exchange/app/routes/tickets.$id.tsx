@@ -1,7 +1,7 @@
 import { redirect } from "@remix-run/node";
 import TicketDetailForm from "~/components/tickets/TicketDetailForm";
 import { getTicket, reserveTicket } from "~/data/tickets.server";
-import { requireUserSession } from "~/data/auth.server";
+import { getUserProfile, requireUserSession } from "~/data/auth.server";
 
 export default function ViewTicketsPage() {
   return (
@@ -19,9 +19,15 @@ export async function action({ params, request }) {
   const ticketId = params.id;
   //   const formData = await request.formData();
   //   const ticketData = Object.fromEntries(formData);
-  await reserveTicket(ticketId, userId);
-
-  return redirect("/tickets");
+  try {
+    const user = await getUserProfile(userId);
+    await reserveTicket(ticketId, user?.email);
+    return redirect("/tickets");
+  } catch (error) {
+    if (error.status === 422 || error.status === 401) {
+      return { brand: error.message };
+    }
+  }
 }
 
 export async function loader({ params }) {
