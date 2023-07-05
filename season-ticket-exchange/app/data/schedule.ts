@@ -1,3 +1,4 @@
+import nhl_logo from "../../public/team_logos/nhl_logo.svg";
 // atlantic
 import boston_bruins from "../../public/team_logos/boston_bruins.svg";
 import carolina_hurricanes from "../../public/team_logos/carolina_hurricanes.svg";

@@ -58,7 +58,7 @@ function TicketsForm() {
   const setDefaultLogo =
     schedule.filter(
       (game: GAME) => game.game === parseInt(defaultValues.game)
-    )[0]?.teamLogo || "";
+    )[0]?.teamLogo || getRemainingSchedule()[0].teamLogo;
 
   const [team_logo, setTeamLogo] = useState(setDefaultLogo);
 
