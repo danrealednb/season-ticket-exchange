@@ -23,8 +23,14 @@ function TicketListItem({ id, ticket }) {
   return (
     <article className="expense-item">
       <div className="grid justify-center items-center text-center text-white">
+        <div className="flex justify-center items-center">
+          <img
+            className="object-scale-down h-12 w-12"
+            src={gameInfo.teamLogo}
+          />
+        </div>
+
         <div className="flex justify-center items-center text-center space-x-2">
-          <img className="object-scale-down h-8 w-8" src={gameInfo.teamLogo} />
           <h2 className="expense-title font-bold py-1 text-lg">
             {gameInfo.opponent} {gameInfo.date.toString()} {gameInfo.time} (
             {gameInfo.gameType})
