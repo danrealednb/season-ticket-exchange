@@ -11,7 +11,7 @@ function TicketListItem({ id, ticket }) {
   const numberOfSeats = ticket.seats.length;
   const totalPrice = numberOfSeats * ticket.price;
   const ticketStatus = ticket.status;
-  console.log("TICKET STATUS", ticketStatus);
+  //   console.log("TICKET STATUS", ticketStatus);
 
   function deleteExpenseItemHandler() {
     const proceed = confirm(

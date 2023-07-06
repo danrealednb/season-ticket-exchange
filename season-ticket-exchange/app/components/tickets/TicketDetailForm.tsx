@@ -8,6 +8,7 @@ import {
 } from "@remix-run/react";
 import { gameInfo } from "~/data/schedule";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import { seatMap } from "~/data/venue";
 
 function ReserveTicketItemHandler() {
   const proceed = confirm(
@@ -59,6 +60,18 @@ function TicketDetailForm() {
           <label className="font-bold">Seats:</label>
           <p>{ticketData.seats.join(",")}</p>
           <p className="font-bold">({numberOfSeats})</p>
+        </div>
+
+        <div>
+          <p className=" text-center underline text-red font-bold">
+            <a
+              href={seatMap(ticketData.section)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              See Seats On Map
+            </a>
+          </p>
         </div>
 
         <div className="flex justify-center items-center space-x-2 text-center">

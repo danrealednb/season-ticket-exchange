@@ -42,11 +42,11 @@ export async function action({ params, request }) {
     return redirect("/mytickets");
     // return { deletedId: data };
   } else if (request.method === "POST") {
-    console.log("---UNRESERVING---");
+    // console.log("---UNRESERVING---");
     await unReserveTicket(ticketId);
     return redirect("/mytickets");
   } else if (request.method === "PUT") {
-    console.log("---SELLING---");
+    // console.log("---SELLING---");
     await updateTicketAsSold(ticketId);
     return redirect("/mytickets");
   }

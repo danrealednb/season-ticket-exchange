@@ -65,11 +65,11 @@ export async function action({ request }) {
     const formData = await request.formData();
     const profileData = Object.fromEntries(formData);
 
-    try {
-      validateUpdateProfileSeatInformation(profileData);
-    } catch (error) {
-      return error;
-    }
+    // try {
+    //   validateUpdateProfileSeatInformation(profileData);
+    // } catch (error) {
+    //   return error;
+    // }
 
     await updateUserProfile(userId, profileData);
     return redirect(`/profile/${userId}`);
@@ -80,6 +80,7 @@ export async function action({ request }) {
     // console.log(profileData);
 
     try {
+      validateUpdateProfileSeatInformation(profileData);
       // validateProfileSeatInformation(profileData);
       validateProfileSellerVerification(profileData);
     } catch (error) {
