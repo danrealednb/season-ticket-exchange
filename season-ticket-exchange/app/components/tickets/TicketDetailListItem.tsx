@@ -62,7 +62,7 @@ function TicketListItem({ id, ticket }) {
         </div>
         <div></div>
 
-        <div className="flex justify-center items-center space-x-2">
+        {/* <div className="flex justify-center items-center space-x-2">
           <label className="font-bold">Aisle Seat</label>
           <p>
             {ticket.aisleSeat === true ? (
@@ -81,12 +81,12 @@ function TicketListItem({ id, ticket }) {
               <FaTimesCircle className="text-red text-l" />
             )}
           </p>
-        </div>
+        </div> */}
 
-        <div className="grid justify-center space-x-2">
+        {/* <div className="grid justify-center space-x-2">
           <label className="font-bold underline">Notes</label>
           <p>{ticket.notes}</p>
-        </div>
+        </div> */}
 
         <div className="grid justify-center space-x-2">
           <label className="font-bold underline">Status</label>

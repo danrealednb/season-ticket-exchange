@@ -8,6 +8,14 @@ import {
 } from "@remix-run/react";
 import { useState } from "react";
 import { GAME, schedule, getRemainingSchedule } from "~/data/schedule";
+import {
+  SECTION,
+  seatMap,
+  venue,
+  getSectionRows,
+  getRowSeats,
+  getSectionInfo,
+} from "~/data/venue";
 
 function TicketsForm() {
   const ticketData = useLoaderData();
@@ -25,6 +33,9 @@ function TicketsForm() {
         aisleSeat: ticketData.aisleSeat,
         discountCodeIncluded: ticketData.discountCodeIncluded,
         notes: ticketData.notes,
+        rowsies: getSectionRows(ticketData.section),
+        suite: ticketData.suite,
+        chaseBridge: ticketData.chaseBridge,
       }
     : {
         game: "",
@@ -35,6 +46,9 @@ function TicketsForm() {
         aisleSeat: "",
         discountCodeIncluded: "",
         notes: "",
+        rowsies: [],
+        suite: "",
+        chaseBridge: "",
       };
 
   if (params.id && !ticketData) {
@@ -95,6 +109,59 @@ function TicketsForm() {
     setDiscountCodeCB(e.target.checked);
   };
 
+  const [suite_cb, setSuiteCB] = useState(defaultValues.suite);
+
+  //   const handleSuiteCB = (e) => {
+  //     const sectionInfo = getSectionInfo(section);
+  //     if (sectionInfo.suite) {
+  //       setSuiteCB(e.target.checked);
+  //     }
+  //   };
+
+  const [chaseBridge_cb, setChaseBridgeCB] = useState(
+    defaultValues.chaseBridge
+  );
+
+  //   const handleChaseBridgeCB = (e) => {
+  //     const sectionInfo = getSectionInfo(section);
+  //     if (sectionInfo.chaseBridge) {
+  //       setChaseBridgeCB(e.target.checked);
+  //     }
+  //   };
+
+  const [section, setSection] = useState(defaultValues.section);
+  const [rowsies, setRows] = useState(defaultValues.rowsies);
+  const [row, setRow] = useState(defaultValues.row);
+  const [seats, setSeats] = useState(defaultValues.seats);
+
+  const handleChangeSection = (e) => {
+    const section = e.target.value;
+    setSection(section);
+    // gets all the rows of the section
+    const sectionInfo = getSectionRows(section);
+    // console.log("SECTION INFO", sectionInfo);
+    setRows(sectionInfo);
+    const seats = getRowSeats(section);
+    setSeats(seats);
+    const sectionData = getSectionInfo(section);
+    if (sectionData.suite) {
+      setSuiteCB(true);
+    } else {
+      setSuiteCB(false);
+    }
+    if (sectionData.chaseBridge) {
+      setChaseBridgeCB(true);
+    } else {
+      setChaseBridgeCB(false);
+    }
+  };
+
+  const handleRowSelection = (e) => {
+    setRow(e.target.value);
+  };
+
+  const availableSeats = `Available Seats (1-${seats})`;
+
   return (
     <Form
       method={ticketData ? "patch" : "post"}
@@ -128,7 +195,7 @@ function TicketsForm() {
         <img className="object-scale-down h-24 w-96" src={team_logo} />
       </div>
 
-      <div className="grid justify-center items-center py-2">
+      {/* <div className="grid justify-center items-center py-2">
         <label htmlFor="section" className="text-white py-2 text-center">
           Section
         </label>
@@ -170,7 +237,125 @@ function TicketsForm() {
           placeholder="Enter Seats Here"
           onChange={handleSeatChange}
         />
+      </div> */}
+
+      <div className="grid justify-center items-center py-2">
+        <label htmlFor="name" className="text-white py-2 text-center">
+          Choose Section
+        </label>
+        <select
+          id="section"
+          name="section"
+          onChange={handleChangeSection}
+          className="border-2 border-white rounded text-center w-80"
+          defaultValue={section}
+          required
+        >
+          {venue.map((section: SECTION) => {
+            return (
+              <option key={section.section} value={section.section}>
+                {section.section}
+              </option>
+            );
+          })}
+        </select>
       </div>
+      {/* <div className="grid justify-center items-center py-2">
+        <a href={seatMap(section)} target="_blank" rel="noopener noreferrer">
+          See Seats On Map
+        </a>
+      </div> */}
+
+      <div className="grid justify-center items-center py-2">
+        <label htmlFor="name" className="text-white py-2 text-center">
+          Choose Row
+        </label>
+        <select
+          id="row"
+          name="row"
+          onChange={handleRowSelection}
+          className="border-2 border-white rounded text-center w-80"
+          defaultValue={row}
+          required
+        >
+          {rowsies.map((item: any) => {
+            return (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+
+      {/* <input
+        type="text"
+        id="seats"
+        name="seats"
+        placeholder={availableSeats}
+        defaultValue={defaultValues.seats}
+      />
+      <label className="text-white text-center">
+        Separate Seats With Comma (Example: 5,6,7,8)
+      </label> */}
+
+      <div className="grid justify-center items-center py-2">
+        <label className="text-white text-center">Seats (1-{seats})</label>
+
+        <input
+          className="border-2 border-white rounded"
+          type="text"
+          id="seats"
+          name="seats"
+          required
+          defaultValue={defaultValues.seats}
+          placeholder={availableSeats}
+          onChange={handleSeatChange}
+        />
+        <label htmlFor="seats" className="text-white py-2 text-center">
+          Seats (Example: 1,2,3,4)
+        </label>
+      </div>
+
+      <div className="flex justify-center items-center space-x-2 py-5">
+        <input
+          className="rounded"
+          id="suite"
+          type="checkbox"
+          name="suite"
+          value={suite_cb === true ? "true" : "false"}
+          checked={suite_cb}
+          disabled
+        />
+        <label htmlFor="opened-radio" className="text-white">
+          Suite
+        </label>
+        <input
+          type="hidden"
+          name="suite"
+          id="suite"
+          defaultValue={suite_cb === true ? "true" : "false"}
+        />
+        <input
+          id="chaseBridge"
+          type="checkbox"
+          name="chaseBridge"
+          className="rounded"
+          checked={chaseBridge_cb}
+          value={chaseBridge_cb === true ? "true" : "false"}
+          disabled
+        />
+        <label htmlFor="finished-radio" className="text-white">
+          Chase Bridge
+        </label>
+        <input
+          type="hidden"
+          name="chaseBridge"
+          id="chaseBridge"
+          defaultValue={chaseBridge_cb === true ? "true" : "false"}
+        />
+      </div>
+
       <div className="grid justify-center items-center py-2">
         <label htmlFor="row" className="text-white py-2 text-center">
           Price (Per Ticket)

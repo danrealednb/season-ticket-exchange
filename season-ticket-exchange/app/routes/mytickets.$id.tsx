@@ -33,8 +33,11 @@ export async function action({ params, request }) {
       price: ticketData.price,
       aisleSeat: ticketData.aisleSeat === "true",
       discountCodeIncluded: ticketData.discountCodeIncluded === "true",
+      suite: ticketData.suite === "true",
+      chaseBridge: ticketData.chaseBridge === "true",
       notes: ticketData.notes,
     };
+    console.log("----UPDATED TICKET----", obj);
     await updateTicket(ticketId, obj);
     return redirect("/mytickets");
   } else if (request.method === "DELETE") {

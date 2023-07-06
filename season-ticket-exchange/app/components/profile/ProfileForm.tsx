@@ -31,8 +31,9 @@ function ProfileForm() {
         zelle: profileData.zelle,
         venmo: profileData.venmo,
         section: profileData.section,
-        row: Array.from(profileData.row),
+        row: profileData.row,
         seats: profileData.seats,
+        rowsies: getSectionRows(profileData.section),
       }
     : {
         firstName: "",
@@ -41,8 +42,9 @@ function ProfileForm() {
         zelle: "",
         venmo: "",
         section: "",
-        row: [],
+        row: "",
         seats: "",
+        rowsies: [],
       };
 
   //   if (params.id && !profileData) {
@@ -53,7 +55,8 @@ function ProfileForm() {
   // const isOpenCBChecked = open_cb === true ? "true" : "false";
 
   const [section, setSection] = useState(defaultValues.section);
-  const [rowsies, setRows] = useState(defaultValues.row);
+  const [rowsies, setRows] = useState(defaultValues.rowsies);
+  const [row, setRow] = useState(defaultValues.row);
   const [seats, setSeats] = useState(defaultValues.seats);
   // console.log("SECTION", section);
   const handleChangeSection = (e) => {
@@ -64,6 +67,9 @@ function ProfileForm() {
     setRows(sectionInfo);
     const seats = getRowSeats(section);
     setSeats(seats);
+  };
+  const handleRowSelection = (e) => {
+    setRow(e.target.value);
   };
 
   const availableSeats = `Available Seats (1-${seats})`;
@@ -171,14 +177,14 @@ function ProfileForm() {
         <select
           id="row"
           name="row"
-          // onChange={handleChangeGame}
+          onChange={handleRowSelection}
           className="border-2 border-white rounded text-center w-80"
-          defaultValue={defaultValues.row}
+          defaultValue={row}
         >
-          {rowsies.map((row: any) => {
+          {rowsies.map((item: any) => {
             return (
-              <option key={row} value={row}>
-                {row}
+              <option key={item} value={item}>
+                {item}
               </option>
             );
           })}

@@ -27,10 +27,12 @@ export async function action({ request }) {
     price: ticketData.price,
     aisleSeat: ticketData.aisleSeat === "true",
     discountCodeIncluded: ticketData.discountCodeIncluded === "true",
+    suite: ticketData.suite === "true",
+    chaseBridge: ticketData.chaseBridge === "true",
     notes: ticketData.notes,
   };
   //   console.log("Ticket Data", ticketData);
-  //   console.log("OBJ", obj);
+  console.log("OBJ", obj);
   try {
     await addTicket(obj, userId);
     return redirect("/mytickets");

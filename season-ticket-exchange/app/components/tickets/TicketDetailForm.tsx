@@ -7,7 +7,11 @@ import {
   useActionData,
 } from "@remix-run/react";
 import { gameInfo } from "~/data/schedule";
-import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import {
+  FaCheckCircle,
+  FaTimesCircle,
+  FaExclamationCircle,
+} from "react-icons/fa";
 import { seatMap } from "~/data/venue";
 
 function ReserveTicketItemHandler() {
@@ -96,6 +100,28 @@ function TicketDetailForm() {
         </div>
 
         <div className="flex justify-center items-center space-x-2 text-center">
+          <label className="font-bold">Suite:</label>
+          <p>
+            {ticketData.suite === true ? (
+              <FaCheckCircle className="text-green text-l" />
+            ) : (
+              <FaTimesCircle className="text-red text-l" />
+            )}
+          </p>
+        </div>
+
+        <div className="flex justify-center items-center space-x-2 text-center">
+          <label className="font-bold">Chase Bridge:</label>
+          <p>
+            {ticketData.chaseBridge === true ? (
+              <FaCheckCircle className="text-green text-l" />
+            ) : (
+              <FaTimesCircle className="text-red text-l" />
+            )}
+          </p>
+        </div>
+
+        <div className="flex justify-center items-center space-x-2 text-center">
           <label className="font-bold">Price:</label>
           <p>{ticketData.price}</p>
         </div>
@@ -122,6 +148,15 @@ function TicketDetailForm() {
             </button>
           </div>
         )}
+
+        <div className="flex justify-center items-center py-5 disabled:opacity-75">
+          <Link to="report" className="">
+            <span className="flex px-1 text-justify items-center space-x-2 text-amber border-2 rounded">
+              <label htmlFor="">Report Tickets</label>
+              <FaExclamationCircle className="text-amber" />
+            </span>
+          </Link>
+        </div>
       </div>
     </Form>
   );

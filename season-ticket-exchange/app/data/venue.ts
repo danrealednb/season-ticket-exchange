@@ -14,6 +14,13 @@ export const seatMap = (sectionId: string) => {
   return `https://www.msg.com/madison-square-garden/seating/msg-rangers/${seatMap}`;
 };
 
+export const getSectionInfo = (sectionId: string) => {
+  const sectionData = venue.filter(
+    (section: SECTION) => section.section === sectionId
+  )[0];
+  return sectionData;
+};
+
 export const getSectionRows = (sectionId: string) => {
   const sectionRowData = venue.filter(
     (section: SECTION) => section.section === sectionId

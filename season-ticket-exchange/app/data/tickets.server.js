@@ -19,6 +19,8 @@ export async function addTicket(ticketData, userId) {
         // userVerified: ticketData.userVerified,
         notes: ticketData.notes,
         gameDate: new Date(filteredGameInfo.date),
+        suite: ticketData.suite,
+        chaseBridge: ticketData.chaseBridge,
       },
     });
   } catch (error) {
@@ -67,6 +69,8 @@ export async function updateTicket(id, ticketData) {
         discountCodeIncluded: ticketData.discountCodeIncluded,
         notes: ticketData.notes,
         gameDate: new Date(filteredGameInfo.date),
+        suite: ticketData.suite,
+        chaseBridge: ticketData.chaseBridge,
       },
     });
     return ticket;
@@ -172,5 +176,20 @@ export async function updateTicketAsSold(id) {
   } catch (error) {
     console.log(error);
     throw new Error("Failed to sell ticket.");
+  }
+}
+
+export async function reportTickets(ticketId, ticketData, userId) {
+  try {
+    return await prisma.reportedTickets.create({
+      data: {
+        ticketId: ticketId,
+        report: ticketData.report,
+        reportedUser: userId,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to report tickets.");
   }
 }

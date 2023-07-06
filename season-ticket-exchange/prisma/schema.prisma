@@ -53,6 +53,8 @@ model Ticket {
   buyer                String       @default("")
   totalPrice           Int          @default(0)
   gameDate             DateTime
+  suite                Boolean      @default(false)
+  chaseBridge          Boolean      @default(false)
   // ReservedTickets      ReservedTickets[]
 }
 
@@ -72,3 +74,11 @@ enum TicketStatus {
 //   userId   String? @db.ObjectId
 //   ticketId String  @db.ObjectId
 // }
+
+model ReportedTickets {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  ticketId     String
+  report       String
+  reportedUser String
+  dateAdded    DateTime @default(now())
+}
