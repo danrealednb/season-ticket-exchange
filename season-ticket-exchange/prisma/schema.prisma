@@ -51,6 +51,7 @@ model Ticket {
   notes                String       @default("")
   // reservedUser         String       @default("") @db.ObjectId
   buyer                String       @default("")
+  seller               String       @default("")
   totalPrice           Int          @default(0)
   gameDate             DateTime
   suite                Boolean      @default(false)

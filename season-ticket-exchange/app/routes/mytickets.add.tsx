@@ -1,7 +1,7 @@
 import TicketsForm from "~/components/tickets/TicketsForm";
 import { addTicket } from "~/data/tickets.server";
 import { redirect } from "@remix-run/node";
-import { requireUserSession } from "~/data/auth.server";
+import { getUserProfile, requireUserSession } from "~/data/auth.server";
 
 export default function AddTicketsPage() {
   return (
@@ -16,6 +16,7 @@ export default function AddTicketsPage() {
 
 export async function action({ request }) {
   const userId = await requireUserSession(request);
+  const user = await getUserProfile(userId);
   const formData = await request.formData();
   const ticketData = Object.fromEntries(formData);
   const seats = ticketData.seats.split(",");
@@ -30,6 +31,7 @@ export async function action({ request }) {
     suite: ticketData.suite === "true",
     chaseBridge: ticketData.chaseBridge === "true",
     notes: ticketData.notes,
+    seller: user?.email,
   };
   //   console.log("Ticket Data", ticketData);
   console.log("OBJ", obj);

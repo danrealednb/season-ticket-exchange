@@ -16,6 +16,7 @@ export async function addTicket(ticketData, userId) {
         discountCodeIncluded: ticketData.discountCodeIncluded,
         status: "AVAILABLE",
         userId,
+        seller: ticketData.seller,
         // userVerified: ticketData.userVerified,
         notes: ticketData.notes,
         gameDate: new Date(filteredGameInfo.date),
