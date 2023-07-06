@@ -130,12 +130,26 @@ export async function updateUserProfile(id, profileData) {
   }
 }
 
-export async function verifySeller(id, profileData) {
+export async function verifySellerPending(id) {
   try {
     await prisma.user.update({
       where: { id },
       data: {
-        verified: profileData.verified,
+        verified: "PENDING_VERIFICATION",
+      },
+    });
+    redirect("/mytickets");
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to verify user as seller");
+  }
+}
+export async function verifySellerVerified(id) {
+  try {
+    await prisma.user.update({
+      where: { id },
+      data: {
+        verified: "VERIFIED",
       },
     });
     redirect("/mytickets");

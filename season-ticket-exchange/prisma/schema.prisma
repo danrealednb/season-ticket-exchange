@@ -11,20 +11,20 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  email     String   @unique
+  id        String         @id @default(auto()) @map("_id") @db.ObjectId
+  email     String         @unique
   password  String
-  role      Role     @default(USER)
-  firstName String   @default("")
-  lastName  String   @default("")
-  verified  Boolean  @default(false)
-  paypal    String   @default("")
-  zelle     String   @default("")
-  venmo     String   @default("")
-  section   String   @default("")
-  row       String   @default("")
-  seats     String   @default("")
-  price     Int      @default(0)
+  role      Role           @default(USER)
+  firstName String         @default("")
+  lastName  String         @default("")
+  verified  VerifiedStatus @default(NOT_VERIFIED)
+  paypal    String         @default("")
+  zelle     String         @default("")
+  venmo     String         @default("")
+  section   String         @default("")
+  row       String         @default("")
+  seats     String         @default("")
+  price     Int            @default(0)
   Ticket    Ticket[]
   // ReservedTickets ReservedTickets[]
 }
@@ -56,6 +56,7 @@ model Ticket {
   gameDate             DateTime
   suite                Boolean      @default(false)
   chaseBridge          Boolean      @default(false)
+  paid                 PaidStatus   @default(AVAILABLE)
   // ReservedTickets      ReservedTickets[]
 }
 
@@ -64,6 +65,19 @@ enum TicketStatus {
   PENDING
   RESERVED
   SOLD
+}
+
+enum PaidStatus {
+  AVAILABLE // tickets are still available and not been reserved yet
+  PENDING_PAYMENT // buyer just reserved and nothing else happend yet
+  PENDING_SELLER_ACCEPTANCE // buyer sent payment via venmo and waiting for seller to acknowledge
+  PAYMENT_COMPLETE // seller has received payment and transaction is complete
+}
+
+enum VerifiedStatus {
+  NOT_VERIFIED
+  PENDING_VERIFICATION
+  VERIFIED
 }
 
 // model ReservedTickets {

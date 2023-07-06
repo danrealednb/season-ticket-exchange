@@ -114,16 +114,7 @@ function ReservedTicketListItem({ id, ticket }) {
           <p>${totalPrice}</p>
         </div>
       </div>
-      {/* <menu className="expense-actions flex justify-center items-center py-5 space-x-2">
-        <button className="px-1 py-1 bg-dark-blue text-white rounded">
-          <Link to={id}>Edit</Link>
-        </button>
-        <button
-          className="px-1 py-1 bg-red text-white rounded"
-          onClick={deleteExpenseItemHandler}
-        >
-          Delete
-        </button>
+      <menu className="expense-actions flex justify-center items-center py-5 space-x-2">
         {ticketStatus === "RESERVED" && (
           <div className="expense-actions flex justify-center items-center space-x-2">
             <button
@@ -136,17 +127,14 @@ function ReservedTicketListItem({ id, ticket }) {
               className="px-1 py-1 bg-red text-white rounded"
               onClick={SellTicketItemHandler}
             >
-              Sold
+              Pay
             </button>
-            <a className="underline" href={emailContact}>
-              Email Buyer
-            </a>
           </div>
         )}
         {ticketStatus === "SOLD" && (
-          <p className="font-bold text-gray">Sold ({ticket.buyer})</p>
+          <p className="font-bold text-gray">Purchased</p>
         )}
-      </menu> */}
+      </menu>
 
       <div className="expense-actions flex justify-center items-center space-x-2">
         <a className="underline" href={emailContact}>

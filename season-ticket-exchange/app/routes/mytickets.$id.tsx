@@ -37,7 +37,7 @@ export async function action({ params, request }) {
       chaseBridge: ticketData.chaseBridge === "true",
       notes: ticketData.notes,
     };
-    console.log("----UPDATED TICKET----", obj);
+    // console.log("----UPDATED TICKET----", obj);
     await updateTicket(ticketId, obj);
     return redirect("/mytickets");
   } else if (request.method === "DELETE") {

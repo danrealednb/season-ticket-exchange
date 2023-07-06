@@ -34,7 +34,7 @@ export async function action({ request }) {
     seller: user?.email,
   };
   //   console.log("Ticket Data", ticketData);
-  console.log("OBJ", obj);
+  // console.log("OBJ", obj);
   try {
     await addTicket(obj, userId);
     return redirect("/mytickets");

@@ -16,7 +16,7 @@ export default function ReportTicketsPage() {
 
 export async function loader({ params }) {
   const ticketId = params.id;
-  console.log("FOUND ON REPORT PAGE", ticketId);
+  // console.log("FOUND ON REPORT PAGE", ticketId);
   return ticketId;
 }
 

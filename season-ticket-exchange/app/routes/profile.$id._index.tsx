@@ -1,6 +1,10 @@
 import { FaPlus, FaTicketAlt } from "react-icons/fa";
 import { Link, useLoaderData } from "@remix-run/react";
-import { getUserProfile, updateUserProfile } from "~/data/auth.server";
+import {
+  getUserProfile,
+  updateUserProfile,
+  verifySellerPending,
+} from "~/data/auth.server";
 import { Outlet } from "@remix-run/react";
 import { requireUserSession } from "~/data/auth.server";
 import SideNav from "~/components/NavigationMenu";
@@ -19,12 +23,12 @@ export default function MyTicketsPage() {
       {/* <MainHeader /> */}
       <SideNav />
       <Outlet />
-      <h1 className="text-white flex justify-center">
-        My Profile Page Goes Here
-      </h1>
-      <p className="text-white flex justify-center">
+      <h2 className="text-white flex justify-center text-4xl underline py-5">
+        My Profile
+      </h2>
+      {/* <p className="text-white flex justify-center">
         Edit Payment Options and Season tickets/seats.
-      </p>
+      </p> */}
       {/* <p>FN:{profile.firstName}</p>
       <p>LN:{profile.lastName}</p> */}
       <ProfileForm />
@@ -80,9 +84,11 @@ export async function action({ request }) {
     // console.log(profileData);
 
     try {
+      // TODO: make sure this works correctly
       validateUpdateProfileSeatInformation(profileData);
       // validateProfileSeatInformation(profileData);
       validateProfileSellerVerification(profileData);
+      await verifySellerPending(userId);
     } catch (error) {
       return error;
     }

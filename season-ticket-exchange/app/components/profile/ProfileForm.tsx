@@ -15,6 +15,11 @@ import {
   getRowSeats,
 } from "~/data/venue";
 import { useState } from "react";
+import {
+  FaCheckCircle,
+  FaExclamationCircle,
+  FaTimesCircle,
+} from "react-icons/fa";
 
 function ProfileForm() {
   const profileData = useLoaderData();
@@ -23,6 +28,11 @@ function ProfileForm() {
   const navigation = useNavigation();
   const isSubmitting = navigation.state !== "idle";
 
+  const userVerified = profileData.verified === "VERIFIED";
+  const userPendingVerification =
+    profileData.verified === "PENDING_VERIFICATION";
+  const userNotVerified = profileData.verified === "NOT_VERIFIED";
+
   const defaultValues = profileData
     ? {
         firstName: profileData.firstName,
@@ -30,10 +40,11 @@ function ProfileForm() {
         paypal: profileData.paypal,
         zelle: profileData.zelle,
         venmo: profileData.venmo,
-        section: profileData.section,
+        section: profileData.section || "109",
         row: profileData.row,
         seats: profileData.seats,
-        rowsies: getSectionRows(profileData.section),
+        rowsies: getSectionRows(profileData.section || "109"),
+        // rowsies: [],
       }
     : {
         firstName: "",
@@ -45,6 +56,7 @@ function ProfileForm() {
         row: "",
         seats: "",
         rowsies: [],
+        // rowsies: []
       };
 
   //   if (params.id && !profileData) {
@@ -204,33 +216,69 @@ function ProfileForm() {
         Separate Seats With Comma (Example: 5,6,7,8)
       </label>
 
-      <div className="flex space-x-2 justify-center items-center text-white">
-        <label>Become a Verified Seller</label>
-        {/* TODO: If user is in pending verification show special icon. TODO: If
-        user is approved, show different special icon TODO: If user is not
-        approved or pending, show button */}
-        <Form method="post" id="verifyseller-form">
-          <input
-            type="hidden"
-            name="paypal"
-            id="paypal"
-            defaultValue={profileData.paypal}
-          />
-          <input
-            type="hidden"
-            name="zelle"
-            id="zelle"
-            defaultValue={profileData.zelle}
-          />
-          <input
-            type="hidden"
-            name="venmo"
-            id="venmo"
-            defaultValue={profileData.venmo}
-          />
-          <button className="rounded border-2 px-1">Verify</button>
-        </Form>
-      </div>
+      {userNotVerified && (
+        <div className="grid space-x-2 justify-center items-center text-center text-white">
+          <label className="font-bold underline py-2">
+            Become a Verified Seller
+          </label>
+          <p className="text-wrap w-80 py-2">
+            You need to have your profile completely filled out and saved before
+            you can verify. At least one payment option is required. After you
+            have verified your information, please send a proof of invoice for
+            your season tickets to{" "}
+            <a
+              className="underline"
+              href="mailto:djreale@gmail.com?subject=NYR%20Ticket%20Verification"
+            >
+              djreale@gmail.com
+            </a>
+          </p>
+          {/* TODO: If user is in pending verification show special icon. TODO: If
+user is approved, show different special icon TODO: If user is not
+approved or pending, show button */}
+          <Form method="post" id="verifyseller-form">
+            <input
+              type="hidden"
+              name="paypal"
+              id="paypal"
+              defaultValue={profileData.paypal}
+            />
+            <input
+              type="hidden"
+              name="zelle"
+              id="zelle"
+              defaultValue={profileData.zelle}
+            />
+            <input
+              type="hidden"
+              name="venmo"
+              id="venmo"
+              defaultValue={profileData.venmo}
+            />
+            <button className="rounded border-2 px-1">Verify Now</button>
+          </Form>
+        </div>
+      )}
+      {userNotVerified && (
+        <div className="flex justify-center items-center text-center space-x-2">
+          <p className="text-white">Not Verified</p>
+          <FaTimesCircle className="text-red" />
+        </div>
+      )}
+
+      {userVerified && (
+        <div className="flex justify-center items-center text-center space-x-2">
+          <p className="text-white">Verified User</p>
+          <FaCheckCircle className="text-green" />
+        </div>
+      )}
+
+      {userPendingVerification && (
+        <div className="flex justify-center items-center text-center space-x-2">
+          <p className="text-white">Pending Verification</p>
+          <FaExclamationCircle className="text-amber" />
+        </div>
+      )}
 
       {validationErrors && (
         <ul className="text-white">

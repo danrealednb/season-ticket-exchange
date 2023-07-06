@@ -8,7 +8,7 @@ import { requireUserSession, getUserProfile } from "~/data/auth.server";
 export default function MyTicketsPage() {
   const { userId, user, tickets, reservedTickets } = useLoaderData();
   const hasTickets = tickets && tickets.length > 0;
-  const userVerified = user.verified;
+  const userVerified = user.verified === "VERIFIED";
   const hasReservedTickets = reservedTickets && reservedTickets.length > 0;
 
   return (
@@ -103,6 +103,5 @@ export async function loader({ request }) {
   const user = await getUserProfile(userId);
   const tickets = await getUserTickets(userId);
   const reservedTickets = await getUsersReservedTickets(user?.email);
-  console.log("RESERVED TIX", reservedTickets);
   return { userId, user, tickets, reservedTickets };
 }
