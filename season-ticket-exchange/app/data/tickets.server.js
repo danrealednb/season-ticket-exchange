@@ -135,6 +135,7 @@ export async function reserveTicket(id, userEmail) {
         // reservedUser: userId,
         buyer: userEmail,
         status: "RESERVED",
+        paid: "PENDING_PAYMENT",
       },
     });
     return ticket;
@@ -156,6 +157,7 @@ export async function unReserveTicket(id) {
           set: "",
         },
         status: "AVAILABLE",
+        paid: "AVAILABLE",
       },
     });
     return ticket;
@@ -206,5 +208,37 @@ export async function getUsersReservedTickets(userEmail) {
   } catch (error) {
     console.log(error);
     throw new Error("Failed to get users reserved tickets.");
+  }
+}
+
+export async function buyerPaidForTickets(id) {
+  try {
+    const ticket = await prisma.ticket.update({
+      where: { id },
+      data: {
+        paid: "PENDING_SELLER_ACCEPTANCE",
+        status: "PENDING",
+      },
+    });
+    return ticket;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed for buyer to pay for tickets.");
+  }
+}
+
+export async function sellerReceivedPaymentForTickets(id) {
+  try {
+    const ticket = await prisma.ticket.update({
+      where: { id },
+      data: {
+        paid: "PAYMENT_COMPLETE",
+        status: "SOLD",
+      },
+    });
+    return ticket;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed for seller to receive payment for tickets.");
   }
 }

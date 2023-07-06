@@ -113,6 +113,15 @@ function ReservedTicketListItem({ id, ticket }) {
           <label className="font-bold">Total Price:</label>
           <p>${totalPrice}</p>
         </div>
+        <div className="flex justify-center space-x-2">
+          <label className="font-bold">Ticket Status:</label>
+          <p className="italic">{ticket.status}</p>
+        </div>
+
+        <div className="flex justify-center space-x-2">
+          <label className="font-bold">Paid Status:</label>
+          <p className="italic">{ticket.paid}</p>
+        </div>
       </div>
       <menu className="expense-actions flex justify-center items-center py-5 space-x-2">
         {ticketStatus === "RESERVED" && (
