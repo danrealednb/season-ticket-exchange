@@ -1,10 +1,10 @@
-import TicketListITem from "./TicketListItem";
+import ReservedTicketListItem from "./ReservedTicketListItem";
 
-function TicketList({ tickets }) {
+function ReservedTicketList({ tickets }) {
   return (
     <article>
       {/* <h2 className="text-white flex justify-center text-4xl underline py-5">
-        My Tickets
+        My Reserved Tickets
       </h2> */}
       <ol
         id="expenses-list"
@@ -12,7 +12,7 @@ function TicketList({ tickets }) {
       >
         {tickets.map((ticket) => (
           <li key={ticket.id} className="text-white">
-            <TicketListITem id={ticket.id} ticket={ticket} />
+            <ReservedTicketListItem id={ticket.id} ticket={ticket} />
           </li>
         ))}
       </ol>
@@ -20,4 +20,4 @@ function TicketList({ tickets }) {
   );
 }
 
-export default TicketList;
+export default ReservedTicketList;

@@ -193,3 +193,17 @@ export async function reportTickets(ticketId, ticketData, userId) {
     throw new Error("Failed to report tickets.");
   }
 }
+export async function getUsersReservedTickets(userEmail) {
+  try {
+    const tickets = await prisma.ticket.findMany({
+      orderBy: { gameDate: "asc" },
+      where: {
+        buyer: userEmail,
+      },
+    });
+    return tickets;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to get users reserved tickets.");
+  }
+}

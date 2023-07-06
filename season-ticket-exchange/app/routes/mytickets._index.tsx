@@ -1,16 +1,41 @@
 import { FaPlus, FaTicketAlt } from "react-icons/fa";
 import { Link, useLoaderData } from "@remix-run/react";
-import { getUserTickets } from "~/data/tickets.server";
+import { getUserTickets, getUsersReservedTickets } from "~/data/tickets.server";
 import TicketList from "~/components/tickets/TicketList";
+import ReservedTicketList from "~/components/tickets/ReservedTicketList";
 import { requireUserSession, getUserProfile } from "~/data/auth.server";
 
 export default function MyTicketsPage() {
-  const { userId, user, tickets } = useLoaderData();
+  const { userId, user, tickets, reservedTickets } = useLoaderData();
   const hasTickets = tickets && tickets.length > 0;
   const userVerified = user.verified;
+  const hasReservedTickets = reservedTickets && reservedTickets.length > 0;
 
   return (
     <>
+      <div className="flex justify-center items-center text-center text-white underline space-x-5">
+        <a
+          className="font-bold"
+          href="javascript:document.getElementById('my-tickets-for-sale').scrollIntoView(true);"
+        >
+          Tickets For Sale
+        </a>
+
+        <a
+          className="font-bold"
+          href="javascript:document.getElementById('my-reserved-tickets').scrollIntoView(true);"
+        >
+          Reserved/Purchased Tickets
+        </a>
+      </div>
+
+      <h2
+        id="my-tickets-for-sale"
+        className="text-white flex justify-center text-4xl underline py-5"
+      >
+        My Tickets
+      </h2>
+
       <main className="">
         {userVerified && (
           <div className="flex justify-center items-center py-5 disabled:opacity-75">
@@ -60,6 +85,14 @@ export default function MyTicketsPage() {
             </div>
           </section>
         )}
+
+        <h2
+          id="my-reserved-tickets"
+          className="text-white flex justify-center text-4xl underline py-5"
+        >
+          My Reserved Tickets
+        </h2>
+        {hasReservedTickets && <ReservedTicketList tickets={reservedTickets} />}
       </main>
     </>
   );
@@ -69,6 +102,7 @@ export async function loader({ request }) {
   const userId = await requireUserSession(request);
   const user = await getUserProfile(userId);
   const tickets = await getUserTickets(userId);
-  //   return tickets;
-  return { userId, user, tickets };
+  const reservedTickets = await getUsersReservedTickets(user?.email);
+  console.log("RESERVED TIX", reservedTickets);
+  return { userId, user, tickets, reservedTickets };
 }
