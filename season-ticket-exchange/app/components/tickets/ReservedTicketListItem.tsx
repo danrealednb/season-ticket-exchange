@@ -40,7 +40,7 @@ function ReservedTicketListItem({ id, ticket }) {
     );
   }
 
-  const emailContact = `mailto:${ticket.buyer}?subject=Rangers%20Tickets`;
+  const emailContact = `mailto:${ticket.seller}?subject=Rangers%20Tickets`;
 
   function unReserveTicketItemHandler() {
     const proceed = confirm(
@@ -147,6 +147,12 @@ function ReservedTicketListItem({ id, ticket }) {
           <p className="font-bold text-gray">Sold ({ticket.buyer})</p>
         )}
       </menu> */}
+
+      <div className="expense-actions flex justify-center items-center space-x-2">
+        <a className="underline" href={emailContact}>
+          Email Seller
+        </a>
+      </div>
     </article>
   );
 }
