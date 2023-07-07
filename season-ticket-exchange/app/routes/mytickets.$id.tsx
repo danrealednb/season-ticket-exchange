@@ -22,18 +22,11 @@ export default function UpdateTicketsPage() {
 
 export async function action({ params, request }) {
   const formData = await request.formData();
-  //   const intent = formData.get("intent");
-  //   console.log(intent);
   const editIntent = formData.get("intent") === "editTickets";
-  console.log("EDIT INTENT", editIntent);
   const intent = formData.get("intent");
   const paidIntent = formData.get("intent") === "paid";
   const releaseIntent = formData.get("intent") === "release";
   const soldIntent = formData.get("intent") === "sold";
-  console.log("PAID INTENT", paidIntent);
-  console.log("RELEASE INTENT", releaseIntent);
-  console.log("SOLD INTENT", soldIntent);
-  console.log("REQEUSETED INTENT", intent);
   const ticketId = params.id;
   if (request.method === "PATCH" && editIntent) {
     const ticketData = Object.fromEntries(formData);
