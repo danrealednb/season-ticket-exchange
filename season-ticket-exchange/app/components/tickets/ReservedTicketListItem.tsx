@@ -1,5 +1,6 @@
 import { Link, useFetcher, Form } from "@remix-run/react";
 import { GAME, schedule } from "~/data/schedule";
+import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 
 function ReservedTicketListItem({ id, ticket }) {
   const fetcher = useFetcher();
@@ -10,24 +11,14 @@ function ReservedTicketListItem({ id, ticket }) {
 
   const numberOfSeats = ticket.seats.length;
   const totalPrice = numberOfSeats * ticket.price;
-  const ticketStatus = ticket.status;
+  const ticketStatusReserved = ticket.status === "RESERVED";
+  const ticketStatusPending = ticket.status === "PENDING";
+  const ticketStatusSold = ticket.status === "SOLD";
+  const paidStatusPending = ticket.paid === "PENDING_PAYMENT";
+  const paidStatusSellerAcceptance =
+    ticket.paid === "PENDING_SELLER_ACCEPTANCE";
+  const paidStatusPaymentComplete = ticket.paid === "PAYMENT_COMPLETE";
   //   console.log("TICKET STATUS", ticketStatus);
-
-  function deleteExpenseItemHandler() {
-    const proceed = confirm(
-      `Are you sure? Do you want to delete this ticket? (${
-        gameInfo.opponent
-      } ${gameInfo.date.toString()} ${gameInfo.time})`
-    );
-
-    if (!proceed) {
-      return;
-    }
-    fetcher.submit(null, {
-      method: "delete",
-      action: `/mytickets/${id}`,
-    });
-  }
 
   if (fetcher.state !== "idle") {
     return (
@@ -44,7 +35,7 @@ function ReservedTicketListItem({ id, ticket }) {
 
   function unReserveTicketItemHandler() {
     const proceed = confirm(
-      `Are you sure? Do you want to put this ticket back on the market? (${
+      `Are you sure you want to relase these tickets and put them back on the market? (${
         gameInfo.opponent
       } ${gameInfo.date.toString()} ${gameInfo.time})`
     );
@@ -52,16 +43,18 @@ function ReservedTicketListItem({ id, ticket }) {
     if (!proceed) {
       return;
     }
-    fetcher.submit(null, {
-      method: "post",
-      action: `/mytickets/${id}`,
-    });
-    alert("Your Tickets Are Back On the Market");
+    fetcher.submit(
+      { intent: "release" },
+      {
+        method: "patch",
+        action: `/mytickets/${id}`,
+      }
+    );
   }
 
-  function SellTicketItemHandler() {
+  function MarkTicketAsPaidItemHandler() {
     const proceed = confirm(
-      `Are you sure? Do you want to mark this ticket as sold? (${
+      `Are you sure you want to mark this ticket as paid? (${
         gameInfo.opponent
       } ${gameInfo.date.toString()} ${gameInfo.time})`
     );
@@ -69,11 +62,13 @@ function ReservedTicketListItem({ id, ticket }) {
     if (!proceed) {
       return;
     }
-    fetcher.submit(null, {
-      method: "put",
-      action: `/mytickets/${id}`,
-    });
-    alert("Your Tickets Are Now Sold!");
+    fetcher.submit(
+      { intent: "paid" },
+      {
+        method: "patch",
+        action: `/mytickets/${id}`,
+      }
+    );
   }
 
   return (
@@ -124,7 +119,7 @@ function ReservedTicketListItem({ id, ticket }) {
         </div>
       </div>
       <menu className="expense-actions flex justify-center items-center py-5 space-x-2">
-        {ticketStatus === "RESERVED" && (
+        {/* {ticketStatusReserved && (
           <div className="expense-actions flex justify-center items-center space-x-2">
             <button
               className="px-1 py-1 bg-red text-white rounded"
@@ -139,9 +134,40 @@ function ReservedTicketListItem({ id, ticket }) {
               Pay
             </button>
           </div>
+        )} */}
+        {/* {ticketStatusSold && <p className="font-bold text-gray">Purchased</p>} */}
+        {/* if reserved and not paid show this */}
+        {ticketStatusReserved && paidStatusPending && (
+          <div className="flex justify-center items-center text-center space-x-2">
+            <button
+              onClick={unReserveTicketItemHandler}
+              className="rounded px-2 bg-red"
+            >
+              Release
+            </button>
+            <button
+              onClick={MarkTicketAsPaidItemHandler}
+              className="rounded px-2 bg-green"
+            >
+              Paid
+            </button>
+          </div>
         )}
-        {ticketStatus === "SOLD" && (
-          <p className="font-bold text-gray">Purchased</p>
+        {/* if reserved and paid show this */}
+        {ticketStatusPending && paidStatusSellerAcceptance && (
+          <div className="flex justify-center items-center text-center space-x-2">
+            <FaExclamationCircle className="text-amber" />
+            <p className="text-amber italic">
+              Payment is awaiting seller acceptance
+            </p>
+          </div>
+        )}
+        {/* if ticket is paid and seller has accepted acknowledged payment */}
+        {ticketStatusSold && paidStatusPaymentComplete && (
+          <div className="flex justify-center items-center text-center space-x-2">
+            <FaCheckCircle className="text-green" />
+            <p className="font-bold text-green italic">Transaction Completed</p>
+          </div>
         )}
       </menu>
 

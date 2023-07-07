@@ -1,6 +1,6 @@
 import TicketDetailListItem from "./TicketDetailListItem";
 
-function TicketList({ tickets }) {
+function TicketDetailList({ tickets }) {
   return (
     <article>
       <h2 className="text-white flex justify-center text-4xl underline py-5">
@@ -20,4 +20,4 @@ function TicketList({ tickets }) {
   );
 }
 
-export default TicketList;
+export default TicketDetailList;

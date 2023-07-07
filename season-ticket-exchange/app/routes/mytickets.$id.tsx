@@ -3,9 +3,10 @@ import TicketsForm from "~/components/tickets/TicketsForm";
 import {
   deleteTicket,
   getTicket,
+  sellerReceivedPaymentForTickets,
   unReserveTicket,
   updateTicket,
-  updateTicketAsSold,
+  buyerPaidForTickets,
 } from "~/data/tickets.server";
 
 export default function UpdateTicketsPage() {
@@ -20,9 +21,21 @@ export default function UpdateTicketsPage() {
 }
 
 export async function action({ params, request }) {
+  const formData = await request.formData();
+  //   const intent = formData.get("intent");
+  //   console.log(intent);
+  const editIntent = formData.get("intent") === "editTickets";
+  console.log("EDIT INTENT", editIntent);
+  const intent = formData.get("intent");
+  const paidIntent = formData.get("intent") === "paid";
+  const releaseIntent = formData.get("intent") === "release";
+  const soldIntent = formData.get("intent") === "sold";
+  console.log("PAID INTENT", paidIntent);
+  console.log("RELEASE INTENT", releaseIntent);
+  console.log("SOLD INTENT", soldIntent);
+  console.log("REQEUSETED INTENT", intent);
   const ticketId = params.id;
-  if (request.method === "PATCH") {
-    const formData = await request.formData();
+  if (request.method === "PATCH" && editIntent) {
     const ticketData = Object.fromEntries(formData);
     const seats = ticketData.seats.split(",");
     const obj = {
@@ -43,14 +56,15 @@ export async function action({ params, request }) {
   } else if (request.method === "DELETE") {
     await deleteTicket(ticketId);
     return redirect("/mytickets");
-    // return { deletedId: data };
-  } else if (request.method === "POST") {
-    // console.log("---UNRESERVING---");
+  } else if (request.method === "PATCH" && paidIntent) {
+    await buyerPaidForTickets(ticketId);
+    return redirect("/mytickets");
+    // old stuff that works I think
+  } else if (request.method === "PATCH" && releaseIntent) {
     await unReserveTicket(ticketId);
     return redirect("/mytickets");
-  } else if (request.method === "PUT") {
-    // console.log("---SELLING---");
-    await updateTicketAsSold(ticketId);
+  } else if (request.method === "PATCH" && soldIntent) {
+    await sellerReceivedPaymentForTickets(ticketId);
     return redirect("/mytickets");
   }
 }

@@ -167,21 +167,6 @@ export async function unReserveTicket(id) {
   }
 }
 
-export async function updateTicketAsSold(id) {
-  try {
-    const ticket = await prisma.ticket.update({
-      where: { id },
-      data: {
-        status: "SOLD",
-      },
-    });
-    return ticket;
-  } catch (error) {
-    console.log(error);
-    throw new Error("Failed to sell ticket.");
-  }
-}
-
 export async function reportTickets(ticketId, ticketData, userId) {
   try {
     return await prisma.reportedTickets.create({

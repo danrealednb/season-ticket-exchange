@@ -426,6 +426,8 @@ function TicketsForm() {
         <button
           disabled={isSubmitting}
           className="px-1 text-white border-2 rounded"
+          value="editTickets"
+          name="intent"
         >
           {isSubmitting ? "Posting..." : "Sell Tickets"}
         </button>

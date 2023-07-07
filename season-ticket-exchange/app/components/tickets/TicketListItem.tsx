@@ -1,5 +1,6 @@
 import { Link, useFetcher, Form } from "@remix-run/react";
 import { GAME, schedule } from "~/data/schedule";
+import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 
 function TicketListItem({ id, ticket }) {
   const fetcher = useFetcher();
@@ -10,8 +11,15 @@ function TicketListItem({ id, ticket }) {
 
   const numberOfSeats = ticket.seats.length;
   const totalPrice = numberOfSeats * ticket.price;
-  const ticketStatus = ticket.status;
+  // const ticketStatus = ticket.status;
   //   console.log("TICKET STATUS", ticketStatus);
+  const ticketStatusReserved = ticket.status === "RESERVED";
+  const ticketStatusPending = ticket.status === "PENDING";
+  const ticketStatusSold = ticket.status === "SOLD";
+  const paidStatusPending = ticket.paid === "PENDING_PAYMENT";
+  const paidStatusSellerAcceptance =
+    ticket.paid === "PENDING_SELLER_ACCEPTANCE";
+  const paidStatusPaymentComplete = ticket.paid === "PAYMENT_COMPLETE";
 
   function deleteExpenseItemHandler() {
     const proceed = confirm(
@@ -44,7 +52,7 @@ function TicketListItem({ id, ticket }) {
 
   function unReserveTicketItemHandler() {
     const proceed = confirm(
-      `Are you sure? Do you want to put this ticket back on the market? (${
+      `Are you sure you want to relase these tickets and put them back on the market? (${
         gameInfo.opponent
       } ${gameInfo.date.toString()} ${gameInfo.time})`
     );
@@ -52,11 +60,13 @@ function TicketListItem({ id, ticket }) {
     if (!proceed) {
       return;
     }
-    fetcher.submit(null, {
-      method: "post",
-      action: `/mytickets/${id}`,
-    });
-    alert("Your Tickets Are Back On the Market");
+    fetcher.submit(
+      { intent: "release" },
+      {
+        method: "patch",
+        action: `/mytickets/${id}`,
+      }
+    );
   }
 
   function SellTicketItemHandler() {
@@ -69,10 +79,13 @@ function TicketListItem({ id, ticket }) {
     if (!proceed) {
       return;
     }
-    fetcher.submit(null, {
-      method: "put",
-      action: `/mytickets/${id}`,
-    });
+    fetcher.submit(
+      { intent: "sold" },
+      {
+        method: "patch",
+        action: `/mytickets/${id}`,
+      }
+    );
     alert("Your Tickets Are Now Sold!");
   }
 
@@ -124,17 +137,60 @@ function TicketListItem({ id, ticket }) {
           <p className="italic">{ticket.paid}</p>
         </div>
       </div>
-      <menu className="expense-actions flex justify-center items-center py-5 space-x-2">
-        <button className="px-1 py-1 bg-dark-blue text-white rounded">
-          <Link to={id}>Edit</Link>
-        </button>
-        <button
-          className="px-1 py-1 bg-red text-white rounded"
-          onClick={deleteExpenseItemHandler}
-        >
-          Delete
-        </button>
-        {ticketStatus === "RESERVED" && (
+      <menu className="expense-actions grid justify-center items-center py-5 space-x-2">
+        <div className="flex justify-center items-center text-center space-x-2 py-2">
+          <button className="px-1 py-1 bg-dark-blue text-white rounded">
+            <Link to={id}>Edit</Link>
+          </button>
+          <button
+            className="px-1 py-1 bg-red text-white rounded"
+            onClick={deleteExpenseItemHandler}
+          >
+            Delete
+          </button>
+        </div>
+
+        {/* if ticket is reserved by a buyer but not paid yet */}
+        {ticketStatusReserved && paidStatusPending && (
+          <div className="grid justify-center items-center text-center space-x-2 py-2">
+            <button
+              onClick={unReserveTicketItemHandler}
+              className="rounded px-2 bg-red"
+            >
+              Release Tickets
+            </button>
+            <div className="flex justify-center items-center text-center space-x-2 py-2">
+              <FaExclamationCircle className="text-amber" />
+              <p className="text-amber italic">Reserved by {ticket.buyer}</p>
+            </div>
+          </div>
+        )}
+
+        {/* if ticket is paid by buyer but seller has not accepted or acknowledged payment yet */}
+        {ticketStatusPending && paidStatusSellerAcceptance && (
+          <div className="grid justify-center items-center text-center space-x-2 py-2">
+            <button
+              onClick={SellTicketItemHandler}
+              className="rounded px-2 bg-red"
+            >
+              Accept Payment
+            </button>
+            <div className="flex justify-center items-center text-center space-x-2 py-2">
+              <FaExclamationCircle className="text-amber" />
+              <p className="text-amber italic">Reserved by {ticket.buyer}</p>
+            </div>
+          </div>
+        )}
+
+        {/* if seller has accepted received payment and ticket is officially sold */}
+        {ticketStatusSold && paidStatusPaymentComplete && (
+          <div className="flex justify-center items-center text-center space-x-2">
+            <FaCheckCircle className="text-green" />
+            <p className="text-green italic">Purchased by {ticket.buyer}</p>
+          </div>
+        )}
+
+        {/* {ticketStatusReserved && (
           <div className="expense-actions flex justify-center items-center space-x-2">
             <button
               className="px-1 py-1 bg-red text-white rounded"
@@ -155,7 +211,10 @@ function TicketListItem({ id, ticket }) {
         )}
         {ticketStatus === "SOLD" && (
           <p className="font-bold text-gray">Sold ({ticket.buyer})</p>
-        )}
+        )} */}
+        <a className="underline text-center" href={emailContact}>
+          Email Buyer
+        </a>
       </menu>
     </article>
   );
