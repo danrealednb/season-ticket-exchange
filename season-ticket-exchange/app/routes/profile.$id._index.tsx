@@ -69,31 +69,18 @@ export async function action({ request }) {
     const formData = await request.formData();
     const profileData = Object.fromEntries(formData);
 
-    // try {
-    //   validateUpdateProfileSeatInformation(profileData);
-    // } catch (error) {
-    //   return error;
-    // }
-
     await updateUserProfile(userId, profileData);
     return redirect(`/profile/${userId}`);
   } else if (request.method === "POST") {
     const formData = await request.formData();
     const profileData = Object.fromEntries(formData);
-    // console.log("TRYING TO VERIFY SELLER");
-    // console.log(profileData);
 
     try {
-      // TODO: make sure this works correctly
       validateUpdateProfileSeatInformation(profileData);
-      // validateProfileSeatInformation(profileData);
       validateProfileSellerVerification(profileData);
-      await verifySellerPending(userId);
+      return redirect(`/profile/${userId}`);
     } catch (error) {
       return error;
     }
-
-    // TODO: need to implement workflow for verifying seller
-    return redirect(`/profile/${userId}`);
   }
 }

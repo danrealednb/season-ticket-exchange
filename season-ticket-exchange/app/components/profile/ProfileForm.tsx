@@ -255,6 +255,19 @@ approved or pending, show button */}
               id="venmo"
               defaultValue={profileData.venmo}
             />
+            <input
+              type="hidden"
+              name="section"
+              id="section"
+              defaultValue={section}
+            />
+            <input type="hidden" name="row" id="row" defaultValue={row} />
+            <input
+              type="hidden"
+              name="seats"
+              id="seats"
+              defaultValue={profileData.seats}
+            />
             <button className="rounded border-2 px-1">Verify Now</button>
           </Form>
         </div>
@@ -281,9 +294,15 @@ approved or pending, show button */}
       )}
 
       {validationErrors && (
-        <ul className="text-white">
+        <ul className="text-white text-center">
+          <div className="flex justify-center items-center text-center">
+            <FaExclamationCircle className="text-amber" />
+          </div>
+
           {Object.values(validationErrors).map((error) => (
-            <li key={error}>{error}</li>
+            <li className="italic" key={error}>
+              {error}
+            </li>
           ))}
         </ul>
       )}

@@ -50,20 +50,16 @@ export function validateUpdateProfileSeatInformation(input) {
   const rowExists = input.row && input.row.length > 0;
   const seatsExists = input.seats && input.seats.length > 0;
 
-  if (!sectionExists + !rowExists + !seatsExists === 3) {
-    // no seats entered, which is fine because they are technically optional.
-    // record should be saved
-  } else {
-    if (!sectionExists) {
-      validationErrors.section = "Invalid section information";
-    }
-    if (!rowExists) {
-      validationErrors.row = "Invalid row information";
-    }
-    if (!seatsExists) {
-      validationErrors.seats = "Invalid seat information";
-    }
+  if (!sectionExists) {
+    validationErrors.section = "Invalid section information";
   }
+  if (!rowExists) {
+    validationErrors.row = "Invalid row information";
+  }
+  if (!seatsExists) {
+    validationErrors.seats = "Invalid seat information";
+  }
+
   if (Object.keys(validationErrors).length > 0) {
     throw validationErrors;
   }
