@@ -60,8 +60,8 @@ export async function action({ request }) {
   const formData = await request.formData();
   const userData = Object.fromEntries(formData);
   const userId = formData.get("userId");
-  console.log("USER DATA FROM ACTION", userData);
-  console.log("User id from action", userId);
+  //   console.log("USER DATA FROM ACTION", userData);
+  //   console.log("User id from action", userId);
   await verifySellerVerified(userId);
   return redirect("/admin");
 }
