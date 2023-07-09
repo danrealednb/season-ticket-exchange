@@ -174,3 +174,15 @@ export async function getUserProfile(id) {
     throw new Error("Failed to get user profile.");
   }
 }
+
+export async function getUnVerifiedUsers() {
+  try {
+    const profile = await prisma.user.findMany({
+      where: { verified: "PENDING_VERIFICATION" },
+    });
+    return profile;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to get user profile.");
+  }
+}
