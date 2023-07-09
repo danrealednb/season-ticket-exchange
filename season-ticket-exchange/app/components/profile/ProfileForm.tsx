@@ -5,6 +5,7 @@ import {
   useLoaderData,
   useParams,
   useActionData,
+  useFetcher,
 } from "@remix-run/react";
 
 import {
@@ -25,7 +26,9 @@ import {
 function ProfileForm() {
   const profileData = useLoaderData();
   const validationErrors = useActionData();
-  //   const params = useParams();
+  // console.log("UI VALIDATION ERRORS", validationErrors);
+  // const params = useParams();
+  // const fetcher = useFetcher();
   const navigation = useNavigation();
   const isSubmitting = navigation.state !== "idle";
 
@@ -34,41 +37,55 @@ function ProfileForm() {
     profileData.verified === "PENDING_VERIFICATION";
   const userNotVerified = profileData.verified === "NOT_VERIFIED";
 
-  const defaultValues = profileData
-    ? {
-        firstName: profileData.firstName,
-        lastName: profileData.lastName,
-        paypal: profileData.paypal,
-        zelle: profileData.zelle,
-        venmo: profileData.venmo,
-        section: profileData.section || "Default Section",
-        row: profileData.row,
-        seats: profileData.seats, // seats saved in db
-        rowsies: getSectionRows(profileData.section || "Default Section"),
-        aisleSeat: profileData.aisleSeat,
-        discountCodeIncluded: profileData.discountCodeIncluded,
-        suite: profileData.suite,
-        chaseBridge: profileData.chaseBridge,
-        numberOfSeats: getRowSeats(profileData.section),
-        // rowsies: [],
-      }
-    : {
-        firstName: "",
-        lastName: "",
-        paypal: "",
-        zelle: "",
-        venmo: "",
-        section: "",
-        row: "",
-        seats: "",
-        rowsies: [],
-        aisleSeat: false,
-        discountCodeIncluded: false,
-        suite: false,
-        chaseBridge: false,
-        numberOfSeats: 1,
-        // rowsies: []
-      };
+  // function verifyUserAsSellerItemHandler() {
+  //   fetcher.submit(
+  //     {
+  //       intent: "verify",
+  //     },
+  //     {
+  //       method: "post",
+  //       action: `/profile/${params.id}`,
+  //     }
+  //   );
+  // }
+  // console.log("SEATS FROM DB", profileData.seats);
+  // console.log("SEATS FROM DB As STRING", profileData.seats.join(","));
+
+  const defaultValues = {
+    firstName: profileData.firstName,
+    lastName: profileData.lastName,
+    paypal: profileData.paypal,
+    zelle: profileData.zelle,
+    venmo: profileData.venmo,
+    section: profileData.section || "Default Section",
+    row: profileData.row,
+    // seats: "",
+    seats: profileData.seats.join(","), // seats saved in db coming in as array
+    rowsies: getSectionRows(profileData.section || "Default Section"),
+    aisleSeat: profileData.aisleSeat,
+    discountCodeIncluded: profileData.discountCodeIncluded,
+    suite: profileData.suite,
+    chaseBridge: profileData.chaseBridge,
+    numberOfSeats: getRowSeats(profileData.section || "Default Section"),
+    // rowsies: [],
+  };
+  // : {
+  //     firstName: "",
+  //     lastName: "",
+  //     paypal: "",
+  //     zelle: "",
+  //     venmo: "",
+  //     section: "",
+  //     row: "",
+  //     seats: "",
+  //     rowsies: [],
+  //     aisleSeat: false,
+  //     discountCodeIncluded: false,
+  //     suite: false,
+  //     chaseBridge: false,
+  //     numberOfSeats: 1,
+  //     // rowsies: []
+  //   };
 
   //   if (params.id && !profileData) {
   //     // invalid id
@@ -80,7 +97,7 @@ function ProfileForm() {
   const [section, setSection] = useState(defaultValues.section);
   const [rowsies, setRows] = useState(defaultValues.rowsies);
   const [row, setRow] = useState(defaultValues.row);
-  const [seats, setSeats] = useState(defaultValues.seats);
+  // const [seats, setSeats] = useState(defaultValues.seats);
   const [row_seats, setRowSeats] = useState(defaultValues.numberOfSeats);
   // const [numberOfSeats] = useState(defaultValues.numberOfSeats);
 
@@ -147,53 +164,57 @@ function ProfileForm() {
   // };
 
   return (
-    <Form
-      method="patch"
-      className="form grid justify-center items-center py-5 space-y-5"
-      id="collection-form"
-    >
-      <input
-        type="text"
-        id="firstName"
-        name="firstName"
-        required
-        placeholder="First Name"
-        defaultValue={defaultValues.firstName}
-      />
-      <input
-        type="text"
-        id="lastName"
-        name="lastName"
-        required
-        placeholder="Last Name"
-        defaultValue={defaultValues.lastName}
-      />
+    <div>
+      <Form
+        method="patch"
+        className="form grid justify-center items-center py-5 space-y-5"
+        id="collection-form"
+      >
+        <label className="text-white text-center" htmlFor="">
+          {profileData.email}
+        </label>
+        <input
+          type="text"
+          id="firstName"
+          name="firstName"
+          required
+          placeholder="First Name"
+          defaultValue={defaultValues.firstName}
+        />
+        <input
+          type="text"
+          id="lastName"
+          name="lastName"
+          required
+          placeholder="Last Name"
+          defaultValue={defaultValues.lastName}
+        />
 
-      <input
-        type="text"
-        id="paypal"
-        name="paypal"
-        placeholder="Paypal Email"
-        defaultValue={defaultValues.paypal}
-      />
+        <input
+          type="text"
+          id="paypal"
+          name="paypal"
+          placeholder="Paypal Email"
+          defaultValue={defaultValues.paypal}
+        />
 
-      <input
-        type="text"
-        id="zelle"
-        name="zelle"
-        placeholder="Zelle"
-        defaultValue={defaultValues.zelle}
-      />
+        <input
+          type="text"
+          id="zelle"
+          name="zelle"
+          placeholder="Zelle"
+          defaultValue={defaultValues.zelle}
+        />
 
-      <input
-        type="text"
-        id="venmo"
-        name="venmo"
-        placeholder="Venmo"
-        defaultValue={defaultValues.venmo}
-      />
+        <input
+          type="text"
+          id="venmo"
+          name="venmo"
+          placeholder="Venmo"
+          defaultValue={defaultValues.venmo}
+        />
 
-      {/* <input
+        {/* <input
         type="text"
         id="section"
         name="section"
@@ -216,136 +237,162 @@ function ProfileForm() {
         defaultValue={defaultValues.seats}
       /> */}
 
-      <p className="grid justify-center">
-        <label htmlFor="name" className="text-white py-2 text-center">
-          Choose Section
+        <p className="grid justify-center">
+          <label htmlFor="name" className="text-white py-2 text-center">
+            Choose Section
+          </label>
+          <select
+            id="section"
+            name="section"
+            onChange={handleChangeSection}
+            className="border-2 border-white rounded text-center w-80"
+            defaultValue={section}
+          >
+            {venue.map((section: SECTION) => {
+              return (
+                <option key={section.section} value={section.section}>
+                  {section.section}
+                </option>
+              );
+            })}
+          </select>
+        </p>
+        <p className=" text-center underline text-red font-bold">
+          <a href={seatMap(section)} target="_blank" rel="noopener noreferrer">
+            See Seats On Map
+          </a>
+        </p>
+
+        <p className="grid justify-center">
+          <label htmlFor="name" className="text-white py-2 text-center">
+            Choose Row
+          </label>
+          <select
+            id="row"
+            name="row"
+            onChange={handleRowSelection}
+            className="border-2 border-white rounded text-center w-80"
+            defaultValue={row}
+          >
+            {rowsies.map((item: any) => {
+              return (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              );
+            })}
+          </select>
+        </p>
+
+        <label className="text-white text-center">Seats (1-{row_seats})</label>
+
+        <input
+          type="text"
+          id="seats"
+          name="seats"
+          placeholder={availableSeats}
+          defaultValue={defaultValues.seats}
+        />
+        <label className="text-white text-center">
+          Separate Seats With Comma (Example: 5,6,7,8)
         </label>
-        <select
-          id="section"
-          name="section"
-          onChange={handleChangeSection}
-          className="border-2 border-white rounded text-center w-80"
-          defaultValue={section}
-        >
-          {venue.map((section: SECTION) => {
-            return (
-              <option key={section.section} value={section.section}>
-                {section.section}
-              </option>
-            );
-          })}
-        </select>
-      </p>
-      <p className=" text-center underline text-red font-bold">
-        <a href={seatMap(section)} target="_blank" rel="noopener noreferrer">
-          See Seats On Map
-        </a>
-      </p>
 
-      <p className="grid justify-center">
-        <label htmlFor="name" className="text-white py-2 text-center">
-          Choose Row
-        </label>
-        <select
-          id="row"
-          name="row"
-          onChange={handleRowSelection}
-          className="border-2 border-white rounded text-center w-80"
-          defaultValue={row}
-        >
-          {rowsies.map((item: any) => {
-            return (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            );
-          })}
-        </select>
-      </p>
+        <div className="grid justify-center items-center space-x-2 py-2">
+          <div className="flex justify-center items-center space-x-2">
+            <input
+              id="aisleSeat"
+              type="checkbox"
+              name="aisleSeat"
+              className="rounded"
+              checked={aisleSeat_cb}
+              value={aisleSeat_cb === true ? "true" : "false"}
+              onChange={handleAisleSeatCB}
+            />
+            <label htmlFor="finished-radio" className="text-white">
+              Aisle Seat
+            </label>
+          </div>
+          <div className="flex justify-center items-center space-x-2">
+            <input
+              id="discountCodeIncluded"
+              type="checkbox"
+              name="discountCodeIncluded"
+              className="rounded"
+              checked={discountCode_cb}
+              value={discountCode_cb === true ? "true" : "false"}
+              onChange={handleDiscountCodeCB}
+            />
+            <label htmlFor="finished-radio" className="text-white">
+              Discount Codes
+            </label>
+          </div>
+          <div className="flex justify-center items-center space-x-2">
+            <input
+              id="suite"
+              type="checkbox"
+              name="suite"
+              className="rounded"
+              checked={suite_cb}
+              disabled
+              value={suite_cb === true ? "true" : "false"}
+            />
+            <label htmlFor="finished-radio" className="text-white">
+              Suite
+            </label>
+            <input
+              type="hidden"
+              name="suite"
+              id="suite"
+              defaultValue={suite_cb === true ? "true" : "false"}
+            />
+          </div>
+          <div className="flex justify-center items-center space-x-2">
+            <input
+              id="chaseBridge"
+              type="checkbox"
+              name="chaseBridge"
+              className="rounded"
+              checked={chaseBridge_cb}
+              disabled
+              value={chaseBridge_cb === true ? "true" : "false"}
+            />
+            <label htmlFor="finished-radio" className="text-white">
+              Chase Bridge
+            </label>
+            <input
+              type="hidden"
+              name="chaseBridge"
+              id="chaseBridge"
+              defaultValue={chaseBridge_cb === true ? "true" : "false"}
+            />
+          </div>
+        </div>
 
-      <label className="text-white text-center">Seats (1-{row_seats})</label>
+        {validationErrors && (
+          <ul className="text-white text-center">
+            <div className="flex justify-center items-center text-center">
+              <FaExclamationCircle className="text-amber" />
+            </div>
 
-      <input
-        type="text"
-        id="seats"
-        name="seats"
-        placeholder={availableSeats}
-        defaultValue={defaultValues.seats}
-      />
-      <label className="text-white text-center">
-        Separate Seats With Comma (Example: 5,6,7,8)
-      </label>
-
-      <div className="grid justify-center items-center space-x-2 py-2">
-        <div className="flex justify-center items-center space-x-2">
-          <input
-            id="aisleSeat"
-            type="checkbox"
-            name="aisleSeat"
-            className="rounded"
-            checked={aisleSeat_cb}
-            value={aisleSeat_cb === true ? "true" : "false"}
-            onChange={handleAisleSeatCB}
-          />
-          <label htmlFor="finished-radio" className="text-white">
-            Aisle Seat
-          </label>
+            {Object.values(validationErrors).map((error) => (
+              <li className="italic" key={error}>
+                {error}
+              </li>
+            ))}
+          </ul>
+        )}
+        <div className="form-actions flex justify-center items-center py-5 space-x-2">
+          <button
+            disabled={isSubmitting}
+            className="px-1 text-white border-2 rounded"
+          >
+            {isSubmitting ? "Saving..." : "Update Profile"}
+          </button>
+          <button className="px-1 text-white border-2 rounded">
+            <Link to="..">{isSubmitting ? "Cancelling..." : "Cancel"}</Link>
+          </button>
         </div>
-        <div className="flex justify-center items-center space-x-2">
-          <input
-            id="discountCodeIncluded"
-            type="checkbox"
-            name="discountCodeIncluded"
-            className="rounded"
-            checked={discountCode_cb}
-            value={discountCode_cb === true ? "true" : "false"}
-            onChange={handleDiscountCodeCB}
-          />
-          <label htmlFor="finished-radio" className="text-white">
-            Discount Codes
-          </label>
-        </div>
-        <div className="flex justify-center items-center space-x-2">
-          <input
-            id="suite"
-            type="checkbox"
-            name="suite"
-            className="rounded"
-            checked={suite_cb}
-            disabled
-            value={suite_cb === true ? "true" : "false"}
-          />
-          <label htmlFor="finished-radio" className="text-white">
-            Suite
-          </label>
-          <input
-            type="hidden"
-            name="suite"
-            id="suite"
-            defaultValue={suite_cb === true ? "true" : "false"}
-          />
-        </div>
-        <div className="flex justify-center items-center space-x-2">
-          <input
-            id="chaseBridge"
-            type="checkbox"
-            name="chaseBridge"
-            className="rounded"
-            checked={chaseBridge_cb}
-            disabled
-            value={chaseBridge_cb === true ? "true" : "false"}
-          />
-          <label htmlFor="finished-radio" className="text-white">
-            Chase Bridge
-          </label>
-          <input
-            type="hidden"
-            name="chaseBridge"
-            id="chaseBridge"
-            defaultValue={chaseBridge_cb === true ? "true" : "false"}
-          />
-        </div>
-      </div>
+      </Form>
 
       {userNotVerified && (
         <div className="grid space-x-2 justify-center items-center text-center text-white">
@@ -364,56 +411,36 @@ function ProfileForm() {
               djreale@gmail.com
             </a>
           </p>
-          {/* TODO: If user is in pending verification show special icon. TODO: If
-user is approved, show different special icon TODO: If user is not
-approved or pending, show button */}
-          // TODO: Change this to a fetch and submit via code and remove this
-          hidden field shit
-          <Form method="post" id="verifyseller-form">
-            <input
-              type="hidden"
-              name="paypal"
-              id="paypal"
-              defaultValue={profileData.paypal}
-            />
-            <input
-              type="hidden"
-              name="zelle"
-              id="zelle"
-              defaultValue={profileData.zelle}
-            />
-            <input
-              type="hidden"
-              name="venmo"
-              id="venmo"
-              defaultValue={profileData.venmo}
-            />
-            <input
-              type="hidden"
-              name="section"
-              id="section"
-              defaultValue={profileData.section}
-            />
-            <input
-              type="hidden"
-              name="row"
-              id="row"
-              defaultValue={profileData.row}
-            />
-            <input
-              type="hidden"
-              name="seats"
-              id="seats"
-              defaultValue={profileData.seats}
-            />
-            <button className="rounded border-2 px-1">Verify Now</button>
+          <Form
+            method="post"
+            className="form grid justify-center items-center py-5 space-y-5"
+            id="verify-form"
+          >
+            <button
+              disabled={isSubmitting}
+              className="rounded border-2 px-1"
+              // onClick={verifyUserAsSellerItemHandler}
+            >
+              {isSubmitting ? "Verifying..." : "Verify Now"}
+            </button>
+            <div className="flex justify-center items-center text-center space-x-2">
+              <p className="text-white">Not Verified</p>
+              <FaTimesCircle className="text-red" />
+            </div>
+            {validationErrors && (
+              <ul className="text-white text-center">
+                <div className="flex justify-center items-center text-center">
+                  <FaExclamationCircle className="text-amber" />
+                </div>
+
+                {Object.values(validationErrors).map((error) => (
+                  <li className="italic" key={error}>
+                    {error}
+                  </li>
+                ))}
+              </ul>
+            )}
           </Form>
-        </div>
-      )}
-      {userNotVerified && (
-        <div className="flex justify-center items-center text-center space-x-2">
-          <p className="text-white">Not Verified</p>
-          <FaTimesCircle className="text-red" />
         </div>
       )}
 
@@ -430,32 +457,7 @@ approved or pending, show button */}
           <FaExclamationCircle className="text-amber" />
         </div>
       )}
-
-      {validationErrors && (
-        <ul className="text-white text-center">
-          <div className="flex justify-center items-center text-center">
-            <FaExclamationCircle className="text-amber" />
-          </div>
-
-          {Object.values(validationErrors).map((error) => (
-            <li className="italic" key={error}>
-              {error}
-            </li>
-          ))}
-        </ul>
-      )}
-      <div className="form-actions flex justify-center items-center py-5 space-x-2">
-        <button
-          disabled={isSubmitting}
-          className="px-1 text-white border-2 rounded"
-        >
-          {isSubmitting ? "Saving..." : "Update Profile"}
-        </button>
-        <button className="px-1 text-white border-2 rounded">
-          <Link to="..">{isSubmitting ? "Cancelling..." : "Cancel"}</Link>
-        </button>
-      </div>
-    </Form>
+    </div>
   );
 }
 

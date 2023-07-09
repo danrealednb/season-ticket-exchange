@@ -48,7 +48,7 @@ export function validateUpdateProfileSeatInformation(input) {
   let validationErrors = {};
   const sectionExists = input.section && input.section.length > 0;
   const rowExists = input.row && input.row.length > 0;
-  const seatsExists = input.seats && input.seats.length > 0;
+  const seatsExists = input.seats && input.seats[0].length > 0;
 
   if (!sectionExists) {
     validationErrors.section = "Invalid section information";
@@ -59,6 +59,7 @@ export function validateUpdateProfileSeatInformation(input) {
   if (!seatsExists) {
     validationErrors.seats = "Invalid seat information";
   }
+  // console.log("Seat Validation Errors", validationErrors);
 
   if (Object.keys(validationErrors).length > 0) {
     throw validationErrors;
@@ -80,8 +81,10 @@ export function validateProfileSellerVerification(input) {
   if (!venmoExists) {
     validationErrors.venmo = "Invalid venmo information";
   }
+  // console.log(validationErrors);
 
   if (Object.keys(validationErrors).length === 3) {
     throw validationErrors;
   }
+  // return validationErrors;
 }
