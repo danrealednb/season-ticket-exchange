@@ -1,6 +1,10 @@
 import { Link, useFetcher, Form } from "@remix-run/react";
 import { GAME, schedule } from "~/data/schedule";
-import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
+import {
+  FaCheckCircle,
+  FaExclamationCircle,
+  FaTimesCircle,
+} from "react-icons/fa";
 
 function ReservedTicketListItem({ id, ticket }) {
   const fetcher = useFetcher();
@@ -10,7 +14,7 @@ function ReservedTicketListItem({ id, ticket }) {
   )[0];
 
   const numberOfSeats = ticket.seats.length;
-  const totalPrice = numberOfSeats * ticket.price;
+  //   const totalPrice = numberOfSeats * ticket.price;
   const ticketStatusReserved = ticket.status === "RESERVED";
   const ticketStatusPending = ticket.status === "PENDING";
   const ticketStatusSold = ticket.status === "SOLD";
@@ -106,8 +110,52 @@ function ReservedTicketListItem({ id, ticket }) {
         </div>
         <div className="flex justify-center space-x-2">
           <label className="font-bold">Total Price:</label>
-          <p>${totalPrice}</p>
+          <p>${ticket.totalPrice}</p>
         </div>
+
+        <div className="flex justify-center items-center space-x-2 text-center">
+          <label className="font-bold">Aisle Seat:</label>
+          <p>
+            {ticket.aisleSeat === true ? (
+              <FaCheckCircle className="text-green text-l" />
+            ) : (
+              <FaTimesCircle className="text-red text-l" />
+            )}
+          </p>
+        </div>
+        <div className="flex justify-center items-center space-x-2 text-center">
+          <label className="font-bold">Discount Code:</label>
+          <p>
+            {ticket.discountCodeIncluded === true ? (
+              <FaCheckCircle className="text-green text-l" />
+            ) : (
+              <FaTimesCircle className="text-red text-l" />
+            )}
+          </p>
+        </div>
+
+        <div className="flex justify-center items-center space-x-2 text-center">
+          <label className="font-bold">Suite:</label>
+          <p>
+            {ticket.suite === true ? (
+              <FaCheckCircle className="text-green text-l" />
+            ) : (
+              <FaTimesCircle className="text-red text-l" />
+            )}
+          </p>
+        </div>
+
+        <div className="flex justify-center items-center space-x-2 text-center">
+          <label className="font-bold">Chase Bridge:</label>
+          <p>
+            {ticket.chaseBridge === true ? (
+              <FaCheckCircle className="text-green text-l" />
+            ) : (
+              <FaTimesCircle className="text-red text-l" />
+            )}
+          </p>
+        </div>
+
         <div className="flex justify-center space-x-2">
           <label className="font-bold">Ticket Status:</label>
           <p className="italic">{ticket.status}</p>
@@ -138,19 +186,38 @@ function ReservedTicketListItem({ id, ticket }) {
         {/* {ticketStatusSold && <p className="font-bold text-gray">Purchased</p>} */}
         {/* if reserved and not paid show this */}
         {ticketStatusReserved && paidStatusPending && (
-          <div className="flex justify-center items-center text-center space-x-2">
-            <button
-              onClick={unReserveTicketItemHandler}
-              className="rounded px-2 bg-red"
-            >
-              Release
-            </button>
-            <button
-              onClick={MarkTicketAsPaidItemHandler}
-              className="rounded px-2 bg-green"
-            >
-              Paid
-            </button>
+          <div>
+            <div className="flex justify-center items-center text-center space-x-2 py-2">
+              <button
+                onClick={unReserveTicketItemHandler}
+                className="rounded px-2 bg-red"
+              >
+                Release
+              </button>
+              <button
+                onClick={MarkTicketAsPaidItemHandler}
+                className="rounded px-2 bg-green"
+              >
+                Paid
+              </button>
+            </div>
+            <div className="grid justify-center items-center">
+              <label className="underline italic">
+                Payments can be maid to any of the following:
+              </label>
+              <div className="flex justify-center items-center text-center space-x-2">
+                <label htmlFor="">PayPal: </label>
+                <p>{ticket.paypal}</p>
+              </div>
+              <div className="flex justify-center items-center text-center space-x-2">
+                <label htmlFor="">Zelle: </label>
+                <p>{ticket.zelle}</p>
+              </div>
+              <div className="flex justify-center items-center text-center space-x-2">
+                <label htmlFor="">Venmo: </label>
+                <p>{ticket.venmo}</p>
+              </div>
+            </div>
           </div>
         )}
         {/* if reserved and paid show this */}

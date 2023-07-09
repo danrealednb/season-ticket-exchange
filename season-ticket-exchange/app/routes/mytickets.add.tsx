@@ -22,16 +22,25 @@ export async function action({ request }) {
   const seats = ticketData.seats.split(",");
   const obj = {
     game: ticketData.game,
-    section: ticketData.section,
-    row: ticketData.row,
+    // section: ticketData.section,
+    // row: ticketData.row,
     seats: seats,
     price: ticketData.price,
-    aisleSeat: ticketData.aisleSeat === "true",
-    discountCodeIncluded: ticketData.discountCodeIncluded === "true",
-    suite: ticketData.suite === "true",
-    chaseBridge: ticketData.chaseBridge === "true",
+    // aisleSeat: ticketData.aisleSeat === "true",
+    // discountCodeIncluded: ticketData.discountCodeIncluded === "true",
+    suite: user?.suite,
+    chaseBridge: user?.chaseBridge,
+    aisleSeat: user?.aisleSeat,
+    discountCodeIncluded: user?.discountCodeIncluded,
     notes: ticketData.notes,
     seller: user?.email,
+    totalPrice: ticketData.totalPrice,
+
+    section: user?.section,
+    row: user?.row,
+    paypal: user?.paypal,
+    zelle: user?.zelle,
+    venmo: user?.venmo,
   };
   //   console.log("Ticket Data", ticketData);
   // console.log("OBJ", obj);

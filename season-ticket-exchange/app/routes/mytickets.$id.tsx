@@ -33,15 +33,16 @@ export async function action({ params, request }) {
     const seats = ticketData.seats.split(",");
     const obj = {
       game: ticketData.game,
-      section: ticketData.section,
-      row: ticketData.row,
+      //   section: ticketData.section,
+      //   row: ticketData.row,
       seats: seats,
       price: ticketData.price,
-      aisleSeat: ticketData.aisleSeat === "true",
-      discountCodeIncluded: ticketData.discountCodeIncluded === "true",
-      suite: ticketData.suite === "true",
-      chaseBridge: ticketData.chaseBridge === "true",
+      //   aisleSeat: ticketData.aisleSeat === "true",
+      //   discountCodeIncluded: ticketData.discountCodeIncluded === "true",
+      //   suite: ticketData.suite === "true",
+      //   chaseBridge: ticketData.chaseBridge === "true",
       notes: ticketData.notes,
+      totalPrice: ticketData.totalPrice,
     };
     // console.log("----UPDATED TICKET----", obj);
     await updateTicket(ticketId, obj);

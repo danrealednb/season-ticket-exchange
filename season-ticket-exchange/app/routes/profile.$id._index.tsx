@@ -68,8 +68,25 @@ export async function action({ request }) {
   if (request.method === "PATCH") {
     const formData = await request.formData();
     const profileData = Object.fromEntries(formData);
+    const seats = profileData.seats.split(",");
+    // console.log("FORM DATA", profileData);
+    const obj = {
+      firstName: profileData.firstName,
+      lastName: profileData.lastName,
+      paypal: profileData.paypal,
+      zelle: profileData.zelle,
+      venmo: profileData.venmo,
+      section: profileData.section,
+      row: profileData.row,
+      seats: seats,
+      aisleSeat: profileData.aisleSeat === "true",
+      discountCodeIncluded: profileData.discountCodeIncluded === "true",
+      suite: profileData.suite === "true",
+      chaseBridge: profileData.chaseBridge === "true",
+    };
+    console.log(obj);
 
-    await updateUserProfile(userId, profileData);
+    await updateUserProfile(userId, obj);
     return redirect(`/profile/${userId}`);
   } else if (request.method === "POST") {
     const formData = await request.formData();

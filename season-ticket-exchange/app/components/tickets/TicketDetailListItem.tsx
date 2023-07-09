@@ -10,7 +10,7 @@ function TicketListItem({ id, ticket }) {
   )[0];
 
   const numberOfSeats = ticket.seats.length;
-  const totalPrice = numberOfSeats * ticket.price;
+  //   const totalPrice = numberOfSeats * ticket.price;
 
   if (fetcher.state !== "idle") {
     return (
@@ -58,7 +58,7 @@ function TicketListItem({ id, ticket }) {
         </div>
         <div className="flex justify-center space-x-2">
           <label className="font-bold">Total Price:</label>
-          <p>${totalPrice}</p>
+          <p>${ticket.totalPrice}</p>
         </div>
         <div></div>
 

@@ -22,6 +22,10 @@ export async function addTicket(ticketData, userId) {
         gameDate: new Date(filteredGameInfo.date),
         suite: ticketData.suite,
         chaseBridge: ticketData.chaseBridge,
+        paypal: ticketData.paypal,
+        zelle: ticketData.zelle,
+        venmo: ticketData.venmo,
+        totalPrice: +ticketData.totalPrice,
       },
     });
   } catch (error) {
@@ -62,16 +66,17 @@ export async function updateTicket(id, ticketData) {
       where: { id },
       data: {
         game: parseInt(ticketData.game),
-        section: ticketData.section,
-        row: ticketData.row,
+        // section: ticketData.section,
+        // row: ticketData.row,
         seats: ticketData.seats,
         price: +ticketData.price,
-        aisleSeat: ticketData.aisleSeat,
-        discountCodeIncluded: ticketData.discountCodeIncluded,
+        // aisleSeat: ticketData.aisleSeat,
+        // discountCodeIncluded: ticketData.discountCodeIncluded,
         notes: ticketData.notes,
         gameDate: new Date(filteredGameInfo.date),
-        suite: ticketData.suite,
-        chaseBridge: ticketData.chaseBridge,
+        // suite: ticketData.suite,
+        // chaseBridge: ticketData.chaseBridge,
+        totalPrice: +ticketData.totalPrice,
       },
     });
     return ticket;

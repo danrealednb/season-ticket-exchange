@@ -65,6 +65,14 @@ function TicketDetailForm() {
           <p>{ticketData.seats.join(",")}</p>
           <p className="font-bold">({numberOfSeats})</p>
         </div>
+        <div className="flex justify-center items-center space-x-2 text-center">
+          <label className="font-bold">Price:</label>
+          <p>{ticketData.price}</p>
+        </div>
+        <div className="flex justify-center items-center space-x-2 text-center">
+          <label className="font-bold">Total Price:</label>
+          <p>${totalPrice}</p>
+        </div>
 
         <div>
           <p className=" text-center underline text-red font-bold">
@@ -121,14 +129,6 @@ function TicketDetailForm() {
           </p>
         </div>
 
-        <div className="flex justify-center items-center space-x-2 text-center">
-          <label className="font-bold">Price:</label>
-          <p>{ticketData.price}</p>
-        </div>
-        <div className="flex justify-center items-center space-x-2 text-center">
-          <label className="font-bold">Total Price:</label>
-          <p>${totalPrice}</p>
-        </div>
         <div className="grid justify-center items-center space-x-2 text-center">
           <label className="font-bold underline">Notes</label>
           <p>{ticketData.notes}</p>

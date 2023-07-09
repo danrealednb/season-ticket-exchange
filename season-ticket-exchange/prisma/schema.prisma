@@ -11,21 +11,25 @@ datasource db {
 }
 
 model User {
-  id        String         @id @default(auto()) @map("_id") @db.ObjectId
-  email     String         @unique
-  password  String
-  role      Role           @default(USER)
-  firstName String         @default("")
-  lastName  String         @default("")
-  verified  VerifiedStatus @default(NOT_VERIFIED)
-  paypal    String         @default("")
-  zelle     String         @default("")
-  venmo     String         @default("")
-  section   String         @default("")
-  row       String         @default("")
-  seats     String         @default("")
-  price     Int            @default(0)
-  Ticket    Ticket[]
+  id                   String         @id @default(auto()) @map("_id") @db.ObjectId
+  email                String         @unique
+  password             String
+  role                 Role           @default(USER)
+  firstName            String         @default("")
+  lastName             String         @default("")
+  verified             VerifiedStatus @default(NOT_VERIFIED)
+  paypal               String         @default("")
+  zelle                String         @default("")
+  venmo                String         @default("")
+  section              String         @default("")
+  row                  String         @default("")
+  seats                String[]       @default([])
+  price                Int            @default(0)
+  aisleSeat            Boolean        @default(false)
+  discountCodeIncluded Boolean        @default(false)
+  suite                Boolean        @default(false)
+  chaseBridge          Boolean        @default(false)
+  Ticket               Ticket[]
   // ReservedTickets ReservedTickets[]
 }
 
@@ -57,6 +61,9 @@ model Ticket {
   suite                Boolean      @default(false)
   chaseBridge          Boolean      @default(false)
   paid                 PaidStatus   @default(AVAILABLE)
+  paypal               String       @default("")
+  zelle                String       @default("")
+  venmo                String       @default("")
   // ReservedTickets      ReservedTickets[]
 }
 

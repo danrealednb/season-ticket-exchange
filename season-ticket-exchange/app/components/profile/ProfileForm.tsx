@@ -13,6 +13,7 @@ import {
   venue,
   getSectionRows,
   getRowSeats,
+  getSectionInfo,
 } from "~/data/venue";
 import { useState } from "react";
 import {
@@ -40,10 +41,15 @@ function ProfileForm() {
         paypal: profileData.paypal,
         zelle: profileData.zelle,
         venmo: profileData.venmo,
-        section: profileData.section || "109",
+        section: profileData.section || "Default Section",
         row: profileData.row,
-        seats: profileData.seats,
-        rowsies: getSectionRows(profileData.section || "109"),
+        seats: profileData.seats, // seats saved in db
+        rowsies: getSectionRows(profileData.section || "Default Section"),
+        aisleSeat: profileData.aisleSeat,
+        discountCodeIncluded: profileData.discountCodeIncluded,
+        suite: profileData.suite,
+        chaseBridge: profileData.chaseBridge,
+        numberOfSeats: getRowSeats(profileData.section),
         // rowsies: [],
       }
     : {
@@ -56,6 +62,11 @@ function ProfileForm() {
         row: "",
         seats: "",
         rowsies: [],
+        aisleSeat: false,
+        discountCodeIncluded: false,
+        suite: false,
+        chaseBridge: false,
+        numberOfSeats: 1,
         // rowsies: []
       };
 
@@ -70,6 +81,9 @@ function ProfileForm() {
   const [rowsies, setRows] = useState(defaultValues.rowsies);
   const [row, setRow] = useState(defaultValues.row);
   const [seats, setSeats] = useState(defaultValues.seats);
+  const [row_seats, setRowSeats] = useState(defaultValues.numberOfSeats);
+  // const [numberOfSeats] = useState(defaultValues.numberOfSeats);
+
   // console.log("SECTION", section);
   const handleChangeSection = (e) => {
     const section = e.target.value;
@@ -77,14 +91,60 @@ function ProfileForm() {
     const sectionInfo = getSectionRows(section);
     // console.log("SECTION INFO", sectionInfo);
     setRows(sectionInfo);
-    const seats = getRowSeats(section);
-    setSeats(seats);
+    const row_seats = getRowSeats(section);
+    setRowSeats(row_seats);
+
+    const specialSectionInfo = getSectionInfo(section);
+    if (specialSectionInfo.suite) {
+      setSuiteCB(true);
+    } else {
+      setSuiteCB(false);
+    }
+    if (specialSectionInfo.chaseBridge) {
+      setChaseBridgeCB(true);
+    } else {
+      setChaseBridgeCB(false);
+    }
   };
   const handleRowSelection = (e) => {
     setRow(e.target.value);
   };
 
-  const availableSeats = `Available Seats (1-${seats})`;
+  const availableSeats = `Available Seats (1-${row_seats})`;
+
+  const [aisleSeat_cb, setAisleSeatCB] = useState(defaultValues.aisleSeat);
+  const handleAisleSeatCB = (e) => {
+    console.log("Selected Aisle Seat", e.target.checked);
+    setAisleSeatCB(e.target.checked);
+  };
+
+  const [discountCode_cb, setDiscountCodeCB] = useState(
+    defaultValues.discountCodeIncluded
+  );
+
+  const handleDiscountCodeCB = (e) => {
+    setDiscountCodeCB(e.target.checked);
+  };
+
+  const [suite_cb, setSuiteCB] = useState(defaultValues.suite);
+
+  // const handleSuiteCB = (e) => {
+  //   const sectionInfo = getSectionInfo(section);
+  //   if (sectionInfo.suite) {
+  //     setSuiteCB(e.target.checked);
+  //   }
+  // };
+
+  const [chaseBridge_cb, setChaseBridgeCB] = useState(
+    defaultValues.chaseBridge
+  );
+
+  // const handleChaseBridgeCB = (e) => {
+  //   const sectionInfo = getSectionInfo(section);
+  //   if (sectionInfo.chaseBridge) {
+  //     setChaseBridgeCB(e.target.checked);
+  //   }
+  // };
 
   return (
     <Form
@@ -203,7 +263,7 @@ function ProfileForm() {
         </select>
       </p>
 
-      <label className="text-white text-center">Seats (1-{seats})</label>
+      <label className="text-white text-center">Seats (1-{row_seats})</label>
 
       <input
         type="text"
@@ -215,6 +275,77 @@ function ProfileForm() {
       <label className="text-white text-center">
         Separate Seats With Comma (Example: 5,6,7,8)
       </label>
+
+      <div className="grid justify-center items-center space-x-2 py-2">
+        <div className="flex justify-center items-center space-x-2">
+          <input
+            id="aisleSeat"
+            type="checkbox"
+            name="aisleSeat"
+            className="rounded"
+            checked={aisleSeat_cb}
+            value={aisleSeat_cb === true ? "true" : "false"}
+            onChange={handleAisleSeatCB}
+          />
+          <label htmlFor="finished-radio" className="text-white">
+            Aisle Seat
+          </label>
+        </div>
+        <div className="flex justify-center items-center space-x-2">
+          <input
+            id="discountCodeIncluded"
+            type="checkbox"
+            name="discountCodeIncluded"
+            className="rounded"
+            checked={discountCode_cb}
+            value={discountCode_cb === true ? "true" : "false"}
+            onChange={handleDiscountCodeCB}
+          />
+          <label htmlFor="finished-radio" className="text-white">
+            Discount Codes
+          </label>
+        </div>
+        <div className="flex justify-center items-center space-x-2">
+          <input
+            id="suite"
+            type="checkbox"
+            name="suite"
+            className="rounded"
+            checked={suite_cb}
+            disabled
+            value={suite_cb === true ? "true" : "false"}
+          />
+          <label htmlFor="finished-radio" className="text-white">
+            Suite
+          </label>
+          <input
+            type="hidden"
+            name="suite"
+            id="suite"
+            defaultValue={suite_cb === true ? "true" : "false"}
+          />
+        </div>
+        <div className="flex justify-center items-center space-x-2">
+          <input
+            id="chaseBridge"
+            type="checkbox"
+            name="chaseBridge"
+            className="rounded"
+            checked={chaseBridge_cb}
+            disabled
+            value={chaseBridge_cb === true ? "true" : "false"}
+          />
+          <label htmlFor="finished-radio" className="text-white">
+            Chase Bridge
+          </label>
+          <input
+            type="hidden"
+            name="chaseBridge"
+            id="chaseBridge"
+            defaultValue={chaseBridge_cb === true ? "true" : "false"}
+          />
+        </div>
+      </div>
 
       {userNotVerified && (
         <div className="grid space-x-2 justify-center items-center text-center text-white">
@@ -236,6 +367,8 @@ function ProfileForm() {
           {/* TODO: If user is in pending verification show special icon. TODO: If
 user is approved, show different special icon TODO: If user is not
 approved or pending, show button */}
+          // TODO: Change this to a fetch and submit via code and remove this
+          hidden field shit
           <Form method="post" id="verifyseller-form">
             <input
               type="hidden"
@@ -259,9 +392,14 @@ approved or pending, show button */}
               type="hidden"
               name="section"
               id="section"
-              defaultValue={section}
+              defaultValue={profileData.section}
             />
-            <input type="hidden" name="row" id="row" defaultValue={row} />
+            <input
+              type="hidden"
+              name="row"
+              id="row"
+              defaultValue={profileData.row}
+            />
             <input
               type="hidden"
               name="seats"

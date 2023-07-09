@@ -121,6 +121,10 @@ export async function updateUserProfile(id, profileData) {
         section: profileData.section,
         row: profileData.row,
         seats: profileData.seats,
+        aisleSeat: profileData.aisleSeat,
+        discountCodeIncluded: profileData.discountCodeIncluded,
+        suite: profileData.suite,
+        chaseBridge: profileData.chaseBridge,
       },
     });
     return userProfile;

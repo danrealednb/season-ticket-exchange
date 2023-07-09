@@ -36,6 +36,7 @@ function TicketsForm() {
         rowsies: getSectionRows(ticketData.section),
         suite: ticketData.suite,
         chaseBridge: ticketData.chaseBridge,
+        totalPrice: ticketData.totalPrice,
       }
     : {
         game: "",
@@ -49,6 +50,7 @@ function TicketsForm() {
         rowsies: [],
         suite: "",
         chaseBridge: "",
+        totalPrice: 0,
       };
 
   if (params.id && !ticketData) {
@@ -95,21 +97,21 @@ function TicketsForm() {
     setTeamLogo(gameInfo.teamLogo);
   };
 
-  const [aisleSeat_cb, setAisleSeatCB] = useState(defaultValues.aisleSeat);
+  // const [aisleSeat_cb, setAisleSeatCB] = useState(defaultValues.aisleSeat);
 
-  const handleAisleSeatCB = (e) => {
-    setAisleSeatCB(e.target.checked);
-  };
+  // const handleAisleSeatCB = (e) => {
+  //   setAisleSeatCB(e.target.checked);
+  // };
 
-  const [discountCode_cb, setDiscountCodeCB] = useState(
-    defaultValues.discountCodeIncluded
-  );
+  // const [discountCode_cb, setDiscountCodeCB] = useState(
+  //   defaultValues.discountCodeIncluded
+  // );
 
-  const handleDiscountCodeCB = (e) => {
-    setDiscountCodeCB(e.target.checked);
-  };
+  // const handleDiscountCodeCB = (e) => {
+  //   setDiscountCodeCB(e.target.checked);
+  // };
 
-  const [suite_cb, setSuiteCB] = useState(defaultValues.suite);
+  // const [suite_cb, setSuiteCB] = useState(defaultValues.suite);
 
   //   const handleSuiteCB = (e) => {
   //     const sectionInfo = getSectionInfo(section);
@@ -118,9 +120,9 @@ function TicketsForm() {
   //     }
   //   };
 
-  const [chaseBridge_cb, setChaseBridgeCB] = useState(
-    defaultValues.chaseBridge
-  );
+  // const [chaseBridge_cb, setChaseBridgeCB] = useState(
+  //   defaultValues.chaseBridge
+  // );
 
   //   const handleChaseBridgeCB = (e) => {
   //     const sectionInfo = getSectionInfo(section);
@@ -129,36 +131,37 @@ function TicketsForm() {
   //     }
   //   };
 
-  const [section, setSection] = useState(defaultValues.section);
-  const [rowsies, setRows] = useState(defaultValues.rowsies);
-  const [row, setRow] = useState(defaultValues.row);
+  // const [section, setSection] = useState(defaultValues.section);
+  // const [rowsies, setRows] = useState(defaultValues.rowsies);
+  // const [row, setRow] = useState(defaultValues.row);
   const [seats, setSeats] = useState(defaultValues.seats);
+  const [totalPrice] = useState(defaultValues.totalPrice);
 
-  const handleChangeSection = (e) => {
-    const section = e.target.value;
-    setSection(section);
-    // gets all the rows of the section
-    const sectionInfo = getSectionRows(section);
-    // console.log("SECTION INFO", sectionInfo);
-    setRows(sectionInfo);
-    const seats = getRowSeats(section);
-    setSeats(seats);
-    const sectionData = getSectionInfo(section);
-    if (sectionData.suite) {
-      setSuiteCB(true);
-    } else {
-      setSuiteCB(false);
-    }
-    if (sectionData.chaseBridge) {
-      setChaseBridgeCB(true);
-    } else {
-      setChaseBridgeCB(false);
-    }
-  };
+  // const handleChangeSection = (e) => {
+  //   const section = e.target.value;
+  //   setSection(section);
+  //   // gets all the rows of the section
+  //   const sectionInfo = getSectionRows(section);
+  //   // console.log("SECTION INFO", sectionInfo);
+  //   setRows(sectionInfo);
+  //   const seats = getRowSeats(section);
+  //   setSeats(seats);
+  //   const sectionData = getSectionInfo(section);
+  //   if (sectionData.suite) {
+  //     setSuiteCB(true);
+  //   } else {
+  //     setSuiteCB(false);
+  //   }
+  //   if (sectionData.chaseBridge) {
+  //     setChaseBridgeCB(true);
+  //   } else {
+  //     setChaseBridgeCB(false);
+  //   }
+  // };
 
-  const handleRowSelection = (e) => {
-    setRow(e.target.value);
-  };
+  // const handleRowSelection = (e) => {
+  //   setRow(e.target.value);
+  // };
 
   const availableSeats = `Available Seats (1-${seats})`;
 
@@ -239,7 +242,7 @@ function TicketsForm() {
         />
       </div> */}
 
-      <div className="grid justify-center items-center py-2">
+      {/* <div className="grid justify-center items-center py-2">
         <label htmlFor="name" className="text-white py-2 text-center">
           Choose Section
         </label>
@@ -259,14 +262,14 @@ function TicketsForm() {
             );
           })}
         </select>
-      </div>
+      </div> */}
       {/* <div className="grid justify-center items-center py-2">
         <a href={seatMap(section)} target="_blank" rel="noopener noreferrer">
           See Seats On Map
         </a>
       </div> */}
 
-      <div className="grid justify-center items-center py-2">
+      {/* <div className="grid justify-center items-center py-2">
         <label htmlFor="name" className="text-white py-2 text-center">
           Choose Row
         </label>
@@ -286,7 +289,7 @@ function TicketsForm() {
             );
           })}
         </select>
-      </div>
+      </div> */}
 
       {/* <input
         type="text"
@@ -317,44 +320,43 @@ function TicketsForm() {
         </label>
       </div>
 
-      <div className="flex justify-center items-center space-x-2 py-5">
+      {/* <div className="flex justify-center items-center space-x-2 py-5">
         <input
           className="rounded"
           id="suite"
           type="checkbox"
           name="suite"
-          value={suite_cb === true ? "true" : "false"}
-          checked={suite_cb}
+          checked={defaultValues.suite}
           disabled
         />
         <label htmlFor="opened-radio" className="text-white">
           Suite
-        </label>
-        <input
+        </label> */}
+      {/* <input
           type="hidden"
           name="suite"
           id="suite"
           defaultValue={suite_cb === true ? "true" : "false"}
-        />
-        <input
+        /> */}
+      {/* <input
           id="chaseBridge"
           type="checkbox"
           name="chaseBridge"
           className="rounded"
-          checked={chaseBridge_cb}
-          value={chaseBridge_cb === true ? "true" : "false"}
+          checked={defaultValues.chaseBridge}
+          // value={chaseBridge_cb === true ? "true" : "false"}
           disabled
         />
         <label htmlFor="finished-radio" className="text-white">
           Chase Bridge
-        </label>
-        <input
+        </label> */}
+      {/* <input
           type="hidden"
           name="chaseBridge"
           id="chaseBridge"
           defaultValue={chaseBridge_cb === true ? "true" : "false"}
-        />
-      </div>
+        /> */}
+      {/* </div> */}
 
       <div className="grid justify-center items-center py-2">
         <label htmlFor="row" className="text-white py-2 text-center">
@@ -377,18 +379,26 @@ function TicketsForm() {
         <label className="text-white py-2 text-center">
           Total Price: ${full_price}
         </label>
+        <input
+          type="hidden"
+          id="totalPrice"
+          name="totalPrice"
+          defaultValue={full_price}
+        />
       </div>
-      <div className="flex justify-center items-center space-x-2 py-5">
+      {/* <div className="flex justify-center items-center space-x-2 py-5">
         <input
           className="rounded"
           id="aisleSeat"
           type="checkbox"
           name="aisleSeat"
-          value={aisleSeat_cb === true ? "true" : "false"}
-          checked={aisleSeat_cb}
-          onChange={handleAisleSeatCB}
-        />
-        <label htmlFor="opened-radio" className="text-white">
+          // value={aisleSeat_cb === true ? "true" : "false"}
+          // checked={defaultValues.aisleSeat}
+          value={defaultValues.aisleSeat === true ? "true" : "false"}
+          disabled
+          // onChange={handleAisleSeatCB}
+        /> */}
+      {/* <label htmlFor="opened-radio" className="text-white">
           Aisle Seat
         </label>
         <input
@@ -396,14 +406,15 @@ function TicketsForm() {
           type="checkbox"
           name="discountCodeIncluded"
           className="rounded"
-          checked={discountCode_cb}
-          value={discountCode_cb === true ? "true" : "false"}
-          onChange={handleDiscountCodeCB}
+          checked={defaultValues.chaseBridge}
+          disabled
+          // value={discountCode_cb === true ? "true" : "false"}
+          // onChange={handleDiscountCodeCB}
         />
         <label htmlFor="finished-radio" className="text-white">
           Discount Codes
         </label>
-      </div>
+      </div> */}
       <div className="flex justify-center items-center space-x-2 py-5">
         <textarea
           className="border-2 border-white rounded"

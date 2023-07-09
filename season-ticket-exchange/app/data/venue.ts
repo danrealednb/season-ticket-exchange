@@ -43,6 +43,15 @@ export const getRowSeats = (sectionId: string) => {
     .seats;
 };
 export const venue: Array<SECTION> = [
+  // default choice: For buyers and not sellers
+  {
+    section: "Default Section",
+    rows: [1],
+    seats: 1,
+    suite: false,
+    chaseBridge: false,
+    seatMap: "section-109",
+  },
   // 400's Suites
   {
     section: "Infosys Suite Level 1",
