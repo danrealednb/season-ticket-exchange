@@ -23,13 +23,11 @@ export default function UpdateTicketsPage() {
 
 export async function action({ params, request }) {
   const formData = await request.formData();
-  console.log(formData);
   const editIntent = formData.get("intent") === "editTickets";
   const paidIntent = formData.get("intent") === "paid";
   const releaseIntent = formData.get("intent") === "release";
   const soldIntent = formData.get("intent") === "sold";
   const ticketId = params.id;
-  console.log(ticketId);
   if (request.method === "PATCH" && editIntent) {
     const ticketData = Object.fromEntries(formData);
     const seats = ticketData.seats.split(",");
@@ -50,9 +48,7 @@ export async function action({ params, request }) {
     await updateTicket(ticketId, obj);
     return redirect("/mytickets");
   } else if (request.method === "DELETE") {
-    console.log(ticketId);
     await deleteTicket(ticketId);
-    console.log("Deleted ticket");
     return redirect("/mytickets");
   } else if (request.method === "PATCH" && paidIntent) {
     await buyerPaidForTickets(ticketId);
