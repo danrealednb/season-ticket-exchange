@@ -20,7 +20,7 @@ function TicketListItem({ id, ticket }) {
   const paidStatusSellerAcceptance =
     ticket.paid === "PENDING_SELLER_ACCEPTANCE";
   const paidStatusPaymentComplete = ticket.paid === "PAYMENT_COMPLETE";
-
+  const buyerExists = ticket.buyer !== "";
   function deleteExpenseItemHandler() {
     const proceed = confirm(
       `Are you sure? Do you want to delete this ticket? (${
@@ -212,9 +212,11 @@ function TicketListItem({ id, ticket }) {
         {ticketStatus === "SOLD" && (
           <p className="font-bold text-gray">Sold ({ticket.buyer})</p>
         )} */}
-        <a className="underline text-center" href={emailContact}>
-          Email Buyer
-        </a>
+        {buyerExists && (
+          <a className="underline text-center" href={emailContact}>
+            Email Buyer
+          </a>
+        )}
       </menu>
     </article>
   );
