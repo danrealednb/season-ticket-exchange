@@ -12,7 +12,6 @@ import AdminList from "~/components/admin/AdminList";
 
 export default function AdminPage() {
   const { userData, unVerifiedUsers } = useLoaderData();
-  //   console.log("USER DATA FROM INDEX PAGE", userData);
   const isAdminUser = userData.role === "ADMIN";
   const hasUsers = unVerifiedUsers && unVerifiedUsers.length > 0;
   //   console.log("has users", hasUsers);
@@ -40,8 +39,7 @@ export default function AdminPage() {
 }
 
 export async function loader({ request }) {
-  const userId = requireUserSession(request);
-  //   const userId = await getUserFromSession(request);
+  const userId = await requireUserSession(request);
   if (!userId) {
     return redirect("/auth?mode=login");
   }
