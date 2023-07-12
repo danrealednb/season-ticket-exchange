@@ -16,6 +16,7 @@ function SideNav() {
   // console.log(matches);
   const { pathname } = matches[matches.length - 1];
   const matchedRouteHome = pathname === "/" ? true : false;
+  // if profile link is clicked from home link or a different link
   const profilePath = matchedRouteHome
     ? `/profile/${userId.userId}`
     : `/profile/${userId}`;

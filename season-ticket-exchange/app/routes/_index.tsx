@@ -31,24 +31,31 @@ export default function Index() {
             djreale@gmail.com
           </a>
         </p>
-        <p className="text-white text-center py-5 flex justify-center text-white space-x-2 pt-5 px-5">
-          Fill out your{" "}
-          <Link to={profileUrl} className="underline px-1">
+
+        <div className="flex justify-center pt-5 py-5 flex-wrap">
+          <p className="text-white text-center text-white"> Fill out your </p>
+          <Link to={profileUrl} className="underline px-1 text-white">
             profile,
           </Link>
-          get verified, and start selling{" "}
+
+          <p className="text-white text-center text-white">
+            {" "}
+            get verified, and start selling{" "}
+          </p>
           <Link to="/mytickets" className="underline px-2">
             <FaTicketAlt className="text-gray text-3xl" />
           </Link>
-          today!
-        </p>
-        <p className="text-white text-center py-5 flex justify-center text-white space-x-2 pt-5">
-          Find great{" "}
+
+          <p className="text-white text-center text-white"> today!</p>
+        </div>
+
+        <div className="flex justify-center pt-5 py-5">
+          <p className="text-white text-center text-white">Find great </p>
           <Link to="/tickets" className="underline px-2">
             <FaChair className="text-gray text-3xl" />
           </Link>
-          today!
-        </p>
+          <p className="text-white text-center text-white"> today!</p>
+        </div>
       </div>
       <div className="grid justify-center items-center text-white text-center space-x-2 pt-10 pb-5">
         <h2 className="font-bold text-xl underline">Season Ticket Stats</h2>
