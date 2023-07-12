@@ -31,10 +31,13 @@ function TicketListItem({ id, ticket }) {
     if (!proceed) {
       return;
     }
-    fetcher.submit(null, {
-      method: "delete",
-      action: `/mytickets/${id}`,
-    });
+    fetcher.submit(
+      { intent: "delete" },
+      {
+        method: "delete",
+        action: `/mytickets/${id}`,
+      }
+    );
   }
 
   if (fetcher.state !== "idle") {
