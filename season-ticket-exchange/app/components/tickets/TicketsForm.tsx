@@ -18,11 +18,13 @@ import {
 } from "~/data/venue";
 
 function TicketsForm() {
-  const ticketData = useLoaderData();
+  const { ticketData, userData } = useLoaderData();
+
   const validationErrors = useActionData();
   const params = useParams();
   const navigation = useNavigation();
   const isSubmitting = navigation.state !== "idle";
+  console.log("Ticket Data", ticketData);
   const defaultValues = ticketData
     ? {
         game: ticketData.game,
@@ -37,12 +39,13 @@ function TicketsForm() {
         suite: ticketData.suite,
         chaseBridge: ticketData.chaseBridge,
         totalPrice: ticketData.totalPrice,
+        available_seats: userData.seats.join(","),
       }
     : {
         game: "",
         section: "",
         row: "",
-        seats: "",
+        seats: userData.seats.join(","), // this needs to be user data.seats.join(",")
         price: "",
         aisleSeat: "",
         discountCodeIncluded: "",
@@ -51,6 +54,7 @@ function TicketsForm() {
         suite: "",
         chaseBridge: "",
         totalPrice: 0,
+        available_seats: userData.seats.join(","),
       };
 
   if (params.id && !ticketData) {
@@ -163,7 +167,7 @@ function TicketsForm() {
   //   setRow(e.target.value);
   // };
 
-  const availableSeats = `Available Seats (1-${seats})`;
+  const availableSeats = `Available Seats (${defaultValues.available_seats})`;
 
   return (
     <Form
@@ -303,7 +307,8 @@ function TicketsForm() {
       </label> */}
 
       <div className="grid justify-center items-center py-2">
-        <label className="text-white text-center">Seats (1-{seats})</label>
+        <label className="text-white text-center">Choose Seats</label>
+        <label className="text-white text-center">{availableSeats}</label>
 
         <input
           className="border-2 border-white rounded"
@@ -316,7 +321,7 @@ function TicketsForm() {
           onChange={handleSeatChange}
         />
         <label htmlFor="seats" className="text-white py-2 text-center">
-          Seats (Example: 1,2,3,4)
+          (Example: 1,2,3,4)
         </label>
       </div>
 

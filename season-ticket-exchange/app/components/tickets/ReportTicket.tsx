@@ -59,9 +59,9 @@ function ReportTicket() {
           </button>
         </div>
         <div>
-          <p className="text-white text-center" id="g"></p>
+          <p className="text-amber italic text-center" id="g"></p>
           <Link
-            className="text-white text-center flex justify-center underline"
+            className="text-white text-center flex justify-center underline py-2"
             to=".."
           >
             Back To Ticket Details

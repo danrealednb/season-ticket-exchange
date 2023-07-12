@@ -14,6 +14,15 @@ export default function AddTicketsPage() {
   );
 }
 
+export async function loader({ request }) {
+  const userId = await requireUserSession(request);
+  const userData = await getUserProfile(userId);
+  if (!userData) {
+    throw new Response("User Data not found", { status: 404 });
+  }
+  return { userData };
+}
+
 export async function action({ request }) {
   const userId = await requireUserSession(request);
   const user = await getUserProfile(userId);

@@ -1,5 +1,6 @@
 import { redirect } from "@remix-run/node";
 import TicketsForm from "~/components/tickets/TicketsForm";
+import { getUserProfile, requireUserSession } from "~/data/auth.server";
 import {
   deleteTicket,
   getTicket,
@@ -63,11 +64,13 @@ export async function action({ params, request }) {
   }
 }
 
-export async function loader({ params }) {
+export async function loader({ params, request }) {
   const ticketId = params.id;
-  const ticket = await getTicket(ticketId);
-  if (!ticket) {
+  const userId = await requireUserSession(request);
+  const ticketData = await getTicket(ticketId);
+  const userData = await getUserProfile(userId);
+  if (!ticketData) {
     throw new Response("Ticket not found", { status: 404 });
   }
-  return ticket;
+  return { ticketData, userData };
 }
