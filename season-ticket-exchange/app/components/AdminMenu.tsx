@@ -13,9 +13,9 @@ import { redirect } from "@remix-run/node";
 function AdminMenu() {
   const { userId, userData } = useLoaderData();
 
-  console.log(userData.role);
+  // console.log(userData.role);
   const adminUser = userData.role === "ADMIN";
-  console.log(adminUser);
+  // console.log(adminUser);
 
   const matches = useMatches();
   // console.log(matches);
