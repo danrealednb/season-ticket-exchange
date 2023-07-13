@@ -445,9 +445,17 @@ function ProfileForm() {
       )}
 
       {userVerified && (
-        <div className="flex justify-center items-center text-center space-x-2">
-          <p className="text-white">Verified User</p>
-          <FaCheckCircle className="text-green" />
+        <div className="grid justify-center items-center text-center space-x-2">
+          <div className="flex justify-center items-center text-center space-x-2">
+            <p className="text-white">Verified User</p>
+            <FaCheckCircle className="text-green" />
+          </div>
+          <p className="text-white text-center text-wrap">
+            Your section and row will automatically be set when selling tickets.
+            You'll need to choose which seats you want to sell and the price.
+            Please remember to sell at or around face value. This is a community
+            to get the real fans to the games at an affordable price.
+          </p>
         </div>
       )}
 
